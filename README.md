@@ -19,10 +19,3 @@
   * The game will consist of a single battle screen and static placements for enemies and players. You can drag cards from your card area onto an enemy to activate them. Enemy will display intent and lower HP when dealt damage. Cards are drawn and discarded, and shuffled when the draw pile is empty. 
 
 ![wireframe](./turtle.png)
-
-  * Add image uploading, and banner images
-  * Add followers and following
-  * Add tags
-  * Add addional splash page features( New albums, featured artists etc.)
-  * Ability to purchase
-  * CSS improvements
