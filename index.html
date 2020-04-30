@@ -1,0 +1,71 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+    <meta charset="utf-8" />
+    <title>Gamedev Canvas Workshop</title>
+    <style>
+        * {
+            padding: 0;
+            margin: 0;
+        }
+
+        canvas {
+            background: rgb(187, 187, 187);
+            display: block;
+            margin: 0 auto;
+        }
+    </style>
+</head>
+
+<body>
+
+    <canvas id="myCanvas" width="480" height="320"></canvas>
+
+    <script>
+        // all cards
+        const cards = [
+            {name: "Fire", attack: 6, defense: 0, cost: 1},
+            {name: "Defend", attack: 0, defense: 6, cost: 1},
+            {name: "Double Down", attack: 10, defense: 6, cost:2}
+        ]
+        // deck
+        const deck = [
+            {name: "Fire", attack: 6, defense: 0, cost: 1},
+            {name: "Fire", attack: 6, defense: 0, cost: 1},
+            {name: "Fire", attack: 6, defense: 0, cost: 1},
+            {name: "Fire", attack: 6, defense: 0, cost: 1},
+            {name: "Fire", attack: 6, defense: 0, cost: 1},
+            {name: "Defend", attack: 0, defense: 6, cost: 1},
+            {name: "Defend", attack: 0, defense: 6, cost: 1},
+            {name: "Defend", attack: 0, defense: 6, cost: 1},
+            {name: "Defend", attack: 0, defense: 6, cost: 1},
+            {name: "Defend", attack: 0, defense: 6, cost: 1},
+            {name: "Double Down", attack: 12, defense: 6, cost: 2}
+        ];
+
+        //hand
+        let hand = []
+        let drawAmount = 5
+
+        //turn
+        function playerTurn(){
+            hand = []
+            for (let draw = drawAmount; draw > 0; draw--) {
+                let random = Math.round(Math.random() * deck.length);
+                let card = deck[random];
+                deck.splice(random, 1);
+                hand.push(card)
+            }
+        }
+
+        //Gameplay
+        debugger
+        playerTurn();
+        debugger
+
+    </script>
+
+</body>
+
+</html>
