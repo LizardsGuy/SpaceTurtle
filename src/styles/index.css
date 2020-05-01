@@ -22,3 +22,24 @@ body{
     margin-top: 300px;
     margin-left: 200px;
 }
+
+.hand{
+    display: inline-flex;
+    margin-left: 200px;
+    margin-top: 450px;
+    
+}
+
+.card-list{
+    display: inline-flex;
+    color: red;
+    list-style-type: none;
+}
+
+.Card{
+    background-image: url("./card.jpg");
+    background-size: cover;
+    width: 185px;
+    height: 263px;
+    margin-right: 30px;
+}
