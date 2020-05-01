@@ -43,3 +43,8 @@ body{
     height: 263px;
     margin-right: 30px;
 }
+
+#end-turn{
+    display: flex;
+    color: red;
+}
