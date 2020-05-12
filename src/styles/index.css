@@ -13,8 +13,10 @@ body{
 }
 
 .player {
+    display:  block;
     position: fixed;
-    background-image: url("./turtle.png");
+    background: url(punch.gif) 0 0;
+    /* background-image: url(".punch.gif"); */
     background-repeat: no-repeat;
     background-size: cover;
     width: 200px;
@@ -64,4 +66,18 @@ body{
 .stats-container{
     display: inline-flex;
     font-size: xx-large;
+    margin-bottom: 500px;
+}
+
+.stats{
+    display: flex;
+    color: red;
+}
+
+.enemy-stats{
+    color: red;
+}
+
+.intent{
+    color: red;
 }

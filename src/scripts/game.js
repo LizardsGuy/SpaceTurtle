@@ -18,6 +18,7 @@ document.addEventListener("DOMContentLoaded", () => {
         {name: 'Attack', attack: 5},
         {name: 'Defend', defense: 5}
     ]
+    let intentMove = {};
 
     // All Cards
 
@@ -64,9 +65,9 @@ document.addEventListener("DOMContentLoaded", () => {
                 deck = discard.slice();
                 shuffle(deck);
                 discard = [];
-                debugger;
+             
             }
-            debugger;
+         
             handSize += 1;
             let random = Math.floor(Math.random() * deck.length);
             let card = deck[random];
@@ -76,14 +77,19 @@ document.addEventListener("DOMContentLoaded", () => {
             cardLi.innerHTML = `${card.name}    ${card.description}`;
             cardLi.className = 'Card';
             cardList.appendChild(cardLi)
+
             // playing a card
             cardLi.addEventListener('click',
                     function () {
-                        //bug - cant move hand objects to discard on click
                         if (player.energy >= card.cost){
                             console.log("You clicked on a card")
                                 player.energy -= card.cost;
-                                enemy.hitPoints -= (card.attack + player.strength);
+                                let attackValue = (card.attack + player.strength);
+                                    while (attackValue > 0 && enemy.defense > 0) {
+                                        enemy.defense -= 1;
+                                        attackValue -= 1;
+                                    }
+                                enemy.hitPoints -= attackValue;
                                 player.defense += card.defense;
                                 updatePlayer();
                                 updateEnemy();
@@ -118,7 +124,7 @@ document.addEventListener("DOMContentLoaded", () => {
         let enemyStats = document.querySelector(".enemy-stats");
         enemyStats.innerHTML = `Hit Points:${enemy.hitPoints}`;
         if (enemy.defense > 0) {
-            stats.innerHTML = `Hit Points:${enemy.hitPoints} Defense: ${enemy.defense}`
+            enemyStats.innerHTML = `Hit Points:${enemy.hitPoints} Defense: ${enemy.defense}`
         }
     }
     
@@ -131,17 +137,46 @@ document.addEventListener("DOMContentLoaded", () => {
             discard.push(card);
             handSize -= 1;
         })
-        hand = [];
-        drawHand();
-        player.energy = 3;
+        enemyTurn();
     }
 
     function intention() {
         let random = Math.floor(Math.random() * enemyMoves.length)
         let intent = document.querySelector('.intent');
         intentMove = enemyMoves[random];
-        intent.innerHTML = `Attack:${intentMove.attack}    Defense: ${intentMove.defense}`;
+        if (intentMove.attack !== undefined && intentMove.defend !== undefined){
+            intent.innerHTML = `Attack:${intentMove.attack}    Defend: ${intentMove.defense}`;
+        } else if (intentMove.attack !== undefined){
+            intent.innerHTML = `Attack: ${intentMove.attack}`;
+        } else {
+            intent.innerHTML = `Defend: ${intentMove.defense}`;
+        }
+    }
 
+    function enemyTurn(){
+        enemy.defense = 0;
+        switch (intentMove.name){
+            case "Attack":
+                let attackValue = intentMove.attack;
+                while (attackValue > 0 && player.defense > 0){
+                    player.defense -= 1;
+                    attackValue -= 1;
+                }
+                player.hitPoints -= attackValue;
+            case "Defend":
+                enemy.defense += intentMove.defense;
+                updateEnemy();
+                break;
+            default:
+                break;
+        }
+        hand = [];
+        drawHand();
+        player.energy = 3;
+        player.defense = 0;
+        updatePlayer();
+        intention();
+        updateEnemy();
     }
 
     function shuffle(array) {
