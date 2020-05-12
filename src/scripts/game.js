@@ -8,12 +8,12 @@ document.addEventListener("DOMContentLoaded", () => {
 
     // Player
 
-    const player = { name: "SpaceTurtle", defense: 0, hitPoints: 50, energy: 3 }
+    const player = { name: "SpaceTurtle", strength:0, defense: 0, hitPoints: 50, energy: 3 }
   
 
     // Monster
 
-    const enemy = {name: "Slimey", hitPoints: 10}
+    const enemy = {name: "Slimey", hitPoints: 20, defense: 0, strength: 0}
     const enemyMoves = [
         {name: 'Attack', attack: 5},
         {name: 'Defend', defense: 5}
@@ -53,12 +53,6 @@ document.addEventListener("DOMContentLoaded", () => {
     let maxHandSize = 10;
     let drawAmount = 5;
 
-    // Turn
-
-    updatePlayer();
-    updateEnemy();
-    drawHand();
-
     // Gameplay Functions
 
     function drawHand() {
@@ -81,7 +75,6 @@ document.addEventListener("DOMContentLoaded", () => {
             let cardLi = document.createElement("li");
             cardLi.innerHTML = `${card.name}    ${card.description}`;
             cardLi.className = 'Card';
-            cardLi.setAttribute('index', `${draw}`)
             cardList.appendChild(cardLi)
             // playing a card
             cardLi.addEventListener('click',
@@ -90,7 +83,7 @@ document.addEventListener("DOMContentLoaded", () => {
                         if (player.energy >= card.cost){
                             console.log("You clicked on a card")
                                 player.energy -= card.cost;
-                                enemy.hitPoints -= card.attack;
+                                enemy.hitPoints -= (card.attack + player.strength);
                                 player.defense += card.defense;
                                 updatePlayer();
                                 updateEnemy();
@@ -141,7 +134,14 @@ document.addEventListener("DOMContentLoaded", () => {
         hand = [];
         drawHand();
         player.energy = 3;
-     
+    }
+
+    function intention() {
+        let random = Math.floor(Math.random() * enemyMoves.length)
+        let intent = document.querySelector('.intent');
+        intentMove = enemyMoves[random];
+        intent.innerHTML = `Attack:${intentMove.attack}    Defense: ${intentMove.defense}`;
+
     }
 
     function shuffle(array) {
@@ -150,5 +150,12 @@ document.addEventListener("DOMContentLoaded", () => {
             [array[i], array[j]] = [array[j], array[i]];
         }
     }
+
+
+     // Turn
+    updatePlayer();
+    updateEnemy();
+    drawHand();
+    intention();
     
 })
