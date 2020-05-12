@@ -9,6 +9,7 @@ document.addEventListener("DOMContentLoaded", () => {
     // Player
 
     const player = { name: "SpaceTurtle", defense: 0, hitPoints: 50, energy: 3 }
+  
 
     // Monster
 
@@ -28,7 +29,7 @@ document.addEventListener("DOMContentLoaded", () => {
 
     // Deck
 
-    const deck = [
+    let deck = [
         { name: "Punch", attack: 6, defense: 0, cost: 1, description: 'Deal 6 damage' },
         { name: "Punch", attack: 6, defense: 0, cost: 1, description: 'Deal 6 damage' },
         { name: "Punch", attack: 6, defense: 0, cost: 1, description: 'Deal 6 damage' },
@@ -44,16 +45,18 @@ document.addEventListener("DOMContentLoaded", () => {
 
     // Discard
 
-    const discard = []
+    let discard = []
 
     // Hand
     let hand = []
-    let handSize = 0
+    let handSize = 0;
     let maxHandSize = 10;
     let drawAmount = 5;
 
     // Turn
 
+    updatePlayer();
+    updateEnemy();
     drawHand();
 
     // Gameplay Functions
@@ -61,19 +64,24 @@ document.addEventListener("DOMContentLoaded", () => {
     function drawHand() {
         let cardList = document.querySelector('.card-list');
         // Draw Cards
-        for (let draw = drawAmount; draw > 0 && handSize !== maxHandSize; draw--) {
+        for (let draw = 0; draw < drawAmount && handSize !== maxHandSize; draw++) {
+     
+            if (deck.length === 0) {
+                deck = discard.slice();
+                shuffle(deck);
+                discard = [];
+                debugger;
+            }
+            debugger;
             handSize += 1;
             let random = Math.floor(Math.random() * deck.length);
             let card = deck[random];
             deck.splice(random, 1);
             hand.push(card);
-            let cardLi = document.createElement("li")
-            cardLi.innerHTML = `${card.name}    ${card.description}`
+            let cardLi = document.createElement("li");
+            cardLi.innerHTML = `${card.name}    ${card.description}`;
             cardLi.className = 'Card';
-            // cardLi.setAttribute('Attack', `${card.attack}`)
-            // cardLi.setAttribute('Defense', `${card.defense}`)
-            // cardLi.setAttribute('Cost', `${card.cost}`)
-            // cardLi.setAttribute('Description', `${card.description}`)
+            cardLi.setAttribute('index', `${draw}`)
             cardList.appendChild(cardLi)
             // playing a card
             cardLi.addEventListener('click',
@@ -84,12 +92,14 @@ document.addEventListener("DOMContentLoaded", () => {
                                 player.energy -= card.cost;
                                 enemy.hitPoints -= card.attack;
                                 player.defense += card.defense;
+                                updatePlayer();
+                                updateEnemy();
                                 checkEnemyDeath();
+                                index = hand.indexOf(card);
                                 discard.push(card);
-                                hand.splice(card, 1);
+                                hand.splice(index, 1);
                                 this.remove(this);
                                 handSize -= 1;
-                                debugger
                         } else {
                             console.log("You have not enough energy");
                         }
@@ -99,21 +109,46 @@ document.addEventListener("DOMContentLoaded", () => {
 
     function checkEnemyDeath(){
         if(enemy.hitPoints <= 0){
-            console.log('you win')
+            alert('you win')
         }
     }
 
-    //bug - pushing lis not card obj to discard.
+    function updatePlayer() {
+        let stats = document.querySelector(".stats");
+        stats.innerHTML = `Hit Points:${player.hitPoints}    Energy: ${player.energy}`;
+        if(player.defense > 0){
+            stats.innerHTML = `Hit Points:${player.hitPoints}    Energy: ${player.energy} Defense: ${player.defense}`
+        }
+    }
+
+    function updateEnemy() {
+        let enemyStats = document.querySelector(".enemy-stats");
+        enemyStats.innerHTML = `Hit Points:${enemy.hitPoints}`;
+        if (enemy.defense > 0) {
+            stats.innerHTML = `Hit Points:${enemy.hitPoints} Defense: ${enemy.defense}`
+        }
+    }
+    
     function endTurn(){
         cards = document.querySelectorAll('li');
         cards.forEach(function(card){
-            discard.push(card);
             card.remove();
         })
+        hand.forEach(function(card){
+            discard.push(card);
+            handSize -= 1;
+        })
+        hand = [];
+        drawHand();
+        player.energy = 3;
+     
     }
 
-    
-    
-    
+    function shuffle(array) {
+        for (let i = array.length - 1; i > 0; i--) {
+            let j = Math.floor(Math.random() * (i + 1));
+            [array[i], array[j]] = [array[j], array[i]];
+        }
+    }
     
 })
