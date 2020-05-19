@@ -9,27 +9,34 @@
     <script src="./dist/main.js"></script>
 </head>
 <body>
-    <div class="background">
-        <div class="player">
-            <ul class="stats-container">
-                <div class="stats"></div>
-            </ul>
+    <div class="main">
+        <div class="navbar">
+            <div id="end-turn">End Turn</div>
         </div>
-        <div class="enemy">
-            <ul class="enemy-stats-container">
-                <div class="enemy-stats"></div>
-                <div class="intent"></div>
-            </ul>
+        <div class="figures">
+            <div class="player">
+                <img src="./src/styles/punch.gif" alt="">
+                <ul class="stats-container">
+                    <div class="stats"></div>
+                </ul>
+            </div>
+            <div class="enemy">
+                <div class="enemyImg"></div>
+                <ul class="enemy-stats-container">
+                    <div class="enemy-stats"></div>
+                    <div class="intent"></div>
+                </ul>
+            </div>
         </div>
         <div class="hand">
             <ul class="card-list"> 
             </ul>
         </div>
-        <div id="end-turn">End Turn</div>
+        
     </div>
-
+    <!-- <audio autoplay loop>
+        <source src="/background.mp3" autostart="true" volume=0.2>
+    </audio>  -->
 </body>
 
 </html>
-
-<form></form>

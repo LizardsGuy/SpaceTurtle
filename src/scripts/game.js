@@ -65,7 +65,6 @@ document.addEventListener("DOMContentLoaded", () => {
                 deck = discard.slice();
                 shuffle(deck);
                 discard = [];
-             
             }
          
             handSize += 1;
@@ -82,7 +81,6 @@ document.addEventListener("DOMContentLoaded", () => {
             cardLi.addEventListener('click',
                     function () {
                         if (player.energy >= card.cost){
-                            console.log("You clicked on a card")
                                 player.energy -= card.cost;
                                 let attackValue = (card.attack + player.strength);
                                     while (attackValue > 0 && enemy.defense > 0) {
@@ -108,7 +106,13 @@ document.addEventListener("DOMContentLoaded", () => {
 
     function checkEnemyDeath(){
         if(enemy.hitPoints <= 0){
-            alert('you win')
+            alert('you win');
+        }
+    }
+
+    function checkPlayerDeath(){
+        if(player.hitPoints <= 0){
+            alert('you lose');
         }
     }
 
@@ -175,6 +179,7 @@ document.addEventListener("DOMContentLoaded", () => {
         player.energy = 3;
         player.defense = 0;
         updatePlayer();
+        checkPlayerDeath();
         intention();
         updateEnemy();
     }
