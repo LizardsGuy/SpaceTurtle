@@ -77,9 +77,24 @@ ul{
     display: flex;
     width: 80%;
     justify-content: space-evenly;
-    color: red;
+    color: white;
     list-style-type: none;
-    align-content: center;
+    font-size: small;
+    text-align: center;
+}
+
+.cardText{
+    height: 220px;
+}
+
+.cardDescription{
+    margin-top: 120px;
+    text-align: center;
+    justify-content: center;
+    color: red;
+    margin-left: auto;
+    margin-right: auto;
+    max-width: 140px;
 }
 
 .Card{
@@ -89,10 +104,11 @@ ul{
     width: 20%;
     height: 263px;
     margin: 0 15px;
+    max-width: 185px;
 }
 
 #end-turn{
-    color: red;
+    color: white;
 }
 
 .navbar{

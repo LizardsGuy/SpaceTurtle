@@ -8,12 +8,12 @@ document.addEventListener("DOMContentLoaded", () => {
 
     // Player
 
-    const player = { name: "SpaceTurtle", strength:0, defense: 0, hitPoints: 50, energy: 3 }
+    const player = { name: "SpaceTurtle", strength: 0, defense: 0, hitPoints: 50, energy: 3}
   
 
     // Monster
 
-    const enemy = {name: "Slimey", hitPoints: 20, defense: 0, strength: 0}
+    const enemy = { name: "Slimey", hitPoints: 40, defense: 0, strength: 0, vulnerable: 0, weak: 0}
     const enemyMoves = [
         {name: 'Attack', attack: 5},
         {name: 'Defend', defense: 5}
@@ -25,7 +25,9 @@ document.addEventListener("DOMContentLoaded", () => {
     const allCards = [
         { name: "Punch", attack: 6, defense: 0, cost: 1, description: 'Deal 6 damage' },
         { name: "Defend", attack: 0, defense: 5, cost: 1, description: 'Gain 5 defense' },
-        { name: "Shell Slam", attack: 10, defense: 6, cost: 2, description: 'Deal 10 damage. Gain 6 defense' }
+        { name: "Shell Slam", attack: 10, defense: 6, cost: 2, description: 'Deal 10 damage. Gain 6 defense' },
+        { name: "Shell Harden", attack: 0, defense: 0, cost: 3, description: 'Gain 2 strength every turn' },
+        { name: "Really Angry Yelling", attack: 8, defense: 0, cost: 2, applyVulnerable: 2, description: 'Deal 8 damage. Apply 2 Vulnerable (enemy takes 50% more damage)'}
     ]
 
     // Deck
@@ -41,7 +43,8 @@ document.addEventListener("DOMContentLoaded", () => {
         { name: "Defend", attack: 0, defense: 5, cost: 1, description: 'Gain 5 defense' },
         { name: "Defend", attack: 0, defense: 5, cost: 1, description: 'Gain 5 defense' },
         { name: "Defend", attack: 0, defense: 5, cost: 1, description: 'Gain 5 defense' },
-        { name: "Shell Slam", attack: 10, defense: 6, cost: 2, description: 'Deal 10 damage. Gain 6 defense' }
+        { name: "Really Angry Yelling", attack: 8, defense: 0, cost: 2, applyVulnerable: 2, description: 'Deal 8 damage. Apply 2 Vulnerable (enemy takes 50% more damage)' },
+        // { name: "Shell Slam", attack: 10, defense: 6, cost: 2, description: 'Deal 10 damage. Gain 6 defense' }
     ];
 
     // Discard
@@ -73,9 +76,23 @@ document.addEventListener("DOMContentLoaded", () => {
             deck.splice(random, 1);
             hand.push(card);
             let cardLi = document.createElement("li");
-            cardLi.innerHTML = `${card.name}    ${card.description}`;
+            let cardText = document.createElement("div");
+            cardText.className = "cardText";
+            let cardName = document.createElement("div");
+            cardName.className = "cardName";
+            cardName.innerHTML = `${card.name}`;
+            let cardCost = document.createElement("div");
+            cardCost.className = "cardCost";
+            cardCost.innerHTML = `(${card.cost})`;
+            let cardDescription = document.createElement("div");
+            cardDescription.className = "cardDescription";
+            cardDescription.innerHTML = `${card.description}`;
             cardLi.className = 'Card';
-            cardList.appendChild(cardLi)
+            cardText.appendChild(cardName);
+            cardText.appendChild(cardCost);
+            cardText.appendChild(cardDescription);
+            cardLi.appendChild(cardText);
+            cardList.appendChild(cardLi);
 
             // playing a card
             cardLi.addEventListener('click',
@@ -83,12 +100,24 @@ document.addEventListener("DOMContentLoaded", () => {
                         if (player.energy >= card.cost){
                                 player.energy -= card.cost;
                                 let attackValue = (card.attack + player.strength);
+                                debugger
+                                if (enemy.vulnerable > 0){
+                                    attackValue *= 1.5
+                                }
                                     while (attackValue > 0 && enemy.defense > 0) {
                                         enemy.defense -= 1;
                                         attackValue -= 1;
                                     }
                                 enemy.hitPoints -= attackValue;
+                                if(card.defense !== undefined){
                                 player.defense += card.defense;
+                                }
+                                if(card.strength !== undefined) {
+                                    player.strength += card.strength;
+                                }
+                                if(card.applyVulnerable !== undefined){
+                                    enemy.vulnerable += card.applyVulnerable;
+                                }
                                 updatePlayer();
                                 updateEnemy();
                                 checkEnemyDeath();
@@ -128,7 +157,10 @@ document.addEventListener("DOMContentLoaded", () => {
         let enemyStats = document.querySelector(".enemy-stats");
         enemyStats.innerHTML = `Hit Points:${enemy.hitPoints}`;
         if (enemy.defense > 0) {
-            enemyStats.innerHTML = `Hit Points:${enemy.hitPoints} Defense: ${enemy.defense}`
+            enemyStats.innerHTML += ` Defense: ${enemy.defense}`
+        }
+        if (enemy.vulnerable > 0){
+            enemyStats.innerHTML += ` Vulnerable: ${enemy.vulnerable}`
         }
     }
     
@@ -173,6 +205,9 @@ document.addEventListener("DOMContentLoaded", () => {
                 break;
             default:
                 break;
+        }
+        if(enemy.vulnerable > 0){
+            enemy.vulnerable -= 1;
         }
         hand = [];
         drawHand();
