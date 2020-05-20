@@ -6,7 +6,7 @@ document.addEventListener("DOMContentLoaded", () => {
     })
 
     // Player
-
+    let nothing = 0;
     const player = { name: "SpaceTurtle", baseStrength: 0, strength: 0, defense: 0, maxHealth:50, hitPoints: 50, maxEnergy:3, energy: 3}
   
 
