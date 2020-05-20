@@ -165,12 +165,14 @@ document.addEventListener("DOMContentLoaded", () => {
 
     function updatePlayer() {
         let stats = document.querySelector(".stats");
-        stats.innerHTML = `Hit Points:${player.hitPoints}    Energy: ${player.energy}`;
+        let health = document.querySelector(".health");
+        health.innerHTML = `Hit Points: ${player.hitPoints}`
+        stats.innerHTML = `Energy: ${player.energy}`;
         if(player.defense > 0){
-            stats.innerHTML += ` Defense: ${player.defense}`
+            stats.innerHTML += `<br> Defense: ${player.defense}`
         }
         if(player.strength > 0){
-            stats.innerHTML += ` Strength: ${player.strength}`
+            stats.innerHTML += `<br> Strength: ${player.strength}`
         }
     }
 
@@ -178,10 +180,10 @@ document.addEventListener("DOMContentLoaded", () => {
         let enemyStats = document.querySelector(".enemy-stats");
         enemyStats.innerHTML = `Hit Points:${enemy.hitPoints}`;
         if (enemy.defense > 0) {
-            enemyStats.innerHTML += ` Defense: ${enemy.defense}`
+            enemyStats.innerHTML += ` <br> Defense: ${enemy.defense}`
         }
         if (enemy.vulnerable > 0){
-            enemyStats.innerHTML += ` Vulnerable: ${enemy.vulnerable}`
+            enemyStats.innerHTML += ` <br> Vulnerable: ${enemy.vulnerable}`
         }
     }
     
