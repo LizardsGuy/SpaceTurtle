@@ -1,5 +1,4 @@
 document.addEventListener("DOMContentLoaded", () => {
-
     // add event listener to end turn (research how to just add it to the html?)
     document.getElementById('end-turn').addEventListener('click',
     function(){
@@ -8,17 +7,51 @@ document.addEventListener("DOMContentLoaded", () => {
 
     // Player
 
-    const player = { name: "SpaceTurtle", strength: 0, defense: 0, hitPoints: 50, energy: 3}
+    const player = { name: "SpaceTurtle", baseStrength: 0, strength: 0, defense: 0, maxHealth:50, hitPoints: 50, maxEnergy:3, energy: 3}
   
 
     // Monster
 
-    const enemy = { name: "Slimey", hitPoints: 40, defense: 0, strength: 0, vulnerable: 0, weak: 0}
-    const enemyMoves = [
-        {name: 'Attack', attack: 5},
-        {name: 'Defend', defense: 5}
+    let enemy = {
+        name: "Slimey", maxHealth: 40, hitPoints: 40, defense: 0, strength: 0, vulnerable: 0, weak: 0, moves: [
+            { name: 'Bop', impact: "attack", attack: 5 },
+            { name: 'Cower', impact: "defend", defense: 5 }
+        ]}
+    const enemies = [
+        { name: "Slimey", 
+                    maxHealth: 40,             
+                    hitPoints: 40,             
+                    defense: 0,            
+                    strength: 0,             
+                    vulnerable: 0,               
+                    weak: 0,
+                    moves: [
+                        { name: '"Bop"', impact: "attack", attack: 5 },
+                        { name: 'Cower', impact: "defend", defense: 5 }
+                    ]
+                },
+        { name: "Slimey's Angry Older Brother", 
+                    maxHealth: 50, 
+                    hitPoints: 50, 
+                    defense: 0, 
+                    strength: 0, 
+                    vulnerable: 0, 
+                    weak: 0,           
+                    moves: [
+                    { name: "'Ima bop ya!'", impact: "attack", attack: 10 },
+                    { name: "'Ima smash ya!'", impact: "attack", attack: 12 },
+                    { name: "'Ima have to sit this one out'", impact: "defend", defense: 10}
+            ]
+                }
     ]
+    // const enemyMoves = [
+    //     {name: 'Attack', attack: 5},
+    //     {name: 'Defend', defense: 5}
+    // ]
     let intentMove = {};
+
+    let currentLevel = 0;
+    let levelChecker = 0;
 
     // All Cards
 
@@ -56,11 +89,10 @@ document.addEventListener("DOMContentLoaded", () => {
     // Hand
     let hand = []
     let handSize = 0;
-    let maxHandSize = 10;
-    let drawAmount = 5;
+    let maxHandSize = 5;
+    let drawAmount = 5; 
 
     // Gameplay Functions
-
     function drawHand() {
         let cardList = document.querySelector('.card-list');
         // Draw Cards
@@ -145,7 +177,27 @@ document.addEventListener("DOMContentLoaded", () => {
 
     function checkEnemyDeath(){
         if(enemy.hitPoints <= 0){
-            alert('you win');
+            currentLevel += 1;
+            alert(`You have defeated the enemy! Welcome to level ${currentLevel + 1}`)
+            enemy = enemies[currentLevel];
+            intention();
+            enemy.weak = 0;
+            enemy.vulnerable = 0;
+            updateEnemy();
+            cards = document.querySelectorAll('li');
+            cards.forEach(function (card) {
+                card.remove();
+            })
+            hand.forEach(function (card) {
+                discard.push(card);
+                handSize -= 1;
+            })
+            hand = [];
+            drawHand();
+            player.strength = player.baseStrength;
+            player.energy = player.maxEnergy;
+            player.defense = 0;
+            updatePlayer();
         }
     }
 
@@ -166,8 +218,8 @@ document.addEventListener("DOMContentLoaded", () => {
     function updatePlayer() {
         let stats = document.querySelector(".stats");
         let health = document.querySelector(".health");
-        health.innerHTML = `Hit Points: ${player.hitPoints}`
-        stats.innerHTML = `Energy: ${player.energy}`;
+        health.innerHTML = `Hit Points: ${player.hitPoints} / ${player.maxHealth}`
+        stats.innerHTML = `Energy: ${player.energy} / ${player.maxEnergy}`;
         if(player.defense > 0){
             stats.innerHTML += `<br> Defense: ${player.defense}`
         }
@@ -177,13 +229,21 @@ document.addEventListener("DOMContentLoaded", () => {
     }
 
     function updateEnemy() {
+        let name = document.querySelector(".enemyName");
+        name.innerHTML = `${enemy.name}`;
         let enemyStats = document.querySelector(".enemy-stats");
-        enemyStats.innerHTML = `Hit Points:${enemy.hitPoints}`;
+        enemyStats.innerHTML = `Hit Points: ${enemy.hitPoints} / ${enemy.maxHealth}`;
+        if (levelChecker !== currentLevel){
+        let enemyImg = document.querySelector(`.enemyImg${levelChecker}`);
+        enemyImg.className = `enemyImg${currentLevel}`;
+        levelChecker += 1;
+        }
+        document.getElementsByClassName("myEle").class
         if (enemy.defense > 0) {
-            enemyStats.innerHTML += ` <br> Defense: ${enemy.defense}`
+            enemyStats.innerHTML += ` <br> Defense: ${enemy.defense}`;
         }
         if (enemy.vulnerable > 0){
-            enemyStats.innerHTML += ` <br> Vulnerable: ${enemy.vulnerable}`
+            enemyStats.innerHTML += ` <br> Vulnerable: ${enemy.vulnerable}`;
         }
     }
     
@@ -200,9 +260,11 @@ document.addEventListener("DOMContentLoaded", () => {
     }
 
     function intention() {
-        let random = Math.floor(Math.random() * enemyMoves.length)
+        let random = Math.floor(Math.random() * enemy.moves.length)
         let intent = document.querySelector('.intent');
-        intentMove = enemyMoves[random];
+        let intentName = document.querySelector('.intentName');
+        intentMove = enemy.moves[random];
+        intentName.innerHTML = `${intentMove.name}`
         if (intentMove.attack !== undefined && intentMove.defend !== undefined){
             intent.innerHTML = `Attack:${intentMove.attack}    Defend: ${intentMove.defense}`;
         } else if (intentMove.attack !== undefined){
@@ -214,15 +276,15 @@ document.addEventListener("DOMContentLoaded", () => {
 
     function enemyTurn(){
         enemy.defense = 0;
-        switch (intentMove.name){
-            case "Attack":
+        switch (intentMove.impact){
+            case "attack":
                 let attackValue = intentMove.attack;
                 while (attackValue > 0 && player.defense > 0){
                     player.defense -= 1;
                     attackValue -= 1;
                 }
                 player.hitPoints -= attackValue;
-            case "Defend":
+            case "defend":
                 enemy.defense += intentMove.defense;
                 updateEnemy();
                 break;
@@ -237,7 +299,7 @@ document.addEventListener("DOMContentLoaded", () => {
         }
         hand = [];
         drawHand();
-        player.energy = 3;
+        player.energy = player.maxEnergy;
         player.defense = 0;
         updatePlayer();
         checkPlayerDeath();
