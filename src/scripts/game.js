@@ -25,7 +25,7 @@ document.addEventListener("DOMContentLoaded", () => {
     const allCards = [
         { name: "Punch", attack: 6, defense: 0, cost: 1, description: 'Deal 6 damage' },
         { name: "Defend", attack: 0, defense: 5, cost: 1, description: 'Gain 5 defense' },
-        { name: "Shell Slam", attack: 10, defense: 6, cost: 2, description: 'Deal 10 damage. Gain 6 defense' },
+        { name: "Shell Slam", attack: 5, defense: 5, cost: 1, description: 'Deal 5 damage. Gain 5 defense' },
         { name: "Shell Harden", attack: 0, defense: 0, cost: 3, description: 'Gain 2 strength every turn' },
         { name: "Really Angry Yelling", attack: 8, defense: 0, cost: 2, applyVulnerable: 2, description: 'Deal 8 damage. Apply 2 Vulnerable (enemy takes 50% more damage)'}
     ]
@@ -96,11 +96,11 @@ document.addEventListener("DOMContentLoaded", () => {
 
             // playing a card
             cardLi.addEventListener('click',
+    
                     function () {
                         if (player.energy >= card.cost){
                                 player.energy -= card.cost;
                                 let attackValue = (card.attack + player.strength);
-                                debugger
                                 if (enemy.vulnerable > 0){
                                     attackValue *= 1.5
                                 }
@@ -208,6 +208,9 @@ document.addEventListener("DOMContentLoaded", () => {
         }
         if(enemy.vulnerable > 0){
             enemy.vulnerable -= 1;
+        }
+        if(enemy.weak > 0){
+            enemy.weak -= 1;
         }
         hand = [];
         drawHand();
