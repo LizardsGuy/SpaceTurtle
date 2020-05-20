@@ -23,28 +23,30 @@ document.addEventListener("DOMContentLoaded", () => {
     // All Cards
 
     const allCards = [
-        { name: "Punch", attack: 6, defense: 0, cost: 1, description: 'Deal 6 damage' },
-        { name: "Defend", attack: 0, defense: 5, cost: 1, description: 'Gain 5 defense' },
-        { name: "Shell Slam", attack: 5, defense: 5, cost: 1, description: 'Deal 5 damage. Gain 5 defense' },
-        { name: "Shell Harden", attack: 0, defense: 0, cost: 3, description: 'Gain 2 strength every turn' },
-        { name: "Really Angry Yelling", attack: 8, defense: 0, cost: 2, applyVulnerable: 2, description: 'Deal 8 damage. Apply 2 Vulnerable (enemy takes 50% more damage)'}
+        { name: "Defend", defense: 5, cost: 1, description: 'Gain 5 defense' },
+        { name: "Punch", attack: 6, cost: 1, description: 'Deal 6 damage' },
+        { name: "Really Angry Yelling", attack: 8, cost: 2, applyVulnerable: 2, description: 'Deal 8 damage. Apply 2 Vulnerable (enemy takes 50% more damage)'},
+        { name: "Shell Harden", cost: 2, gainStrength: 2, description: 'Gain 2 strength this combat' },
+        { name: "Shell Slam", attack: 5, defense: 5, cost: 1, description: 'Deal 5 damage. Gain 5 defense' }
     ]
 
     // Deck
 
+                                                                // interpolaton doesnt update
     let deck = [
-        { name: "Punch", attack: 6, defense: 0, cost: 1, description: 'Deal 6 damage' },
-        { name: "Punch", attack: 6, defense: 0, cost: 1, description: 'Deal 6 damage' },
-        { name: "Punch", attack: 6, defense: 0, cost: 1, description: 'Deal 6 damage' },
-        { name: "Punch", attack: 6, defense: 0, cost: 1, description: 'Deal 6 damage' },
-        { name: "Punch", attack: 6, defense: 0, cost: 1, description: 'Deal 6 damage' },
-        { name: "Defend", attack: 0, defense: 5, cost: 1, description: 'Gain 5 defense' },
-        { name: "Defend", attack: 0, defense: 5, cost: 1, description: 'Gain 5 defense' },
-        { name: "Defend", attack: 0, defense: 5, cost: 1, description: 'Gain 5 defense' },
-        { name: "Defend", attack: 0, defense: 5, cost: 1, description: 'Gain 5 defense' },
-        { name: "Defend", attack: 0, defense: 5, cost: 1, description: 'Gain 5 defense' },
-        { name: "Really Angry Yelling", attack: 8, defense: 0, cost: 2, applyVulnerable: 2, description: 'Deal 8 damage. Apply 2 Vulnerable (enemy takes 50% more damage)' },
-        // { name: "Shell Slam", attack: 10, defense: 6, cost: 2, description: 'Deal 10 damage. Gain 6 defense' }
+        { name: "Punch", attack: 6, cost: 1, description: `Deal ${6 + player.strength} damage` },
+        { name: "Punch", attack: 6, cost: 1, description: `Deal ${6 + player.strength} damage`  },
+        { name: "Punch", attack: 6, cost: 1, description: `Deal ${6 + player.strength} damage`  },
+        { name: "Punch", attack: 6, cost: 1, description: `Deal ${6 + player.strength} damage`  },
+        { name: "Punch", attack: 6, cost: 1, description: `Deal ${6 + player.strength} damage` },
+        { name: "Defend", defense: 5, cost: 1, description: 'Gain 5 defense' },
+        { name: "Defend", defense: 5, cost: 1, description: 'Gain 5 defense' },
+        { name: "Defend", defense: 5, cost: 1, description: 'Gain 5 defense' },
+        { name: "Defend", defense: 5, cost: 1, description: 'Gain 5 defense' },
+        { name: "Defend", defense: 5, cost: 1, description: 'Gain 5 defense' },
+        { name: "Shell Harden", cost: 2, gainStrength: 2, description: 'Gain 2 strength this combat' },
+        { name: "Really Angry Yelling", attack: 8, defense: 0, cost: 2, applyVulnerable: 2, description: `Deal ${8 + player.strength} damage. Apply 2 Vulnerable (enemy takes 50% more damage)` },
+        // { name: "Shell Slam", attack: 5, defense: 5, cost: 1, description: 'Deal 5 damage. Gain 5 defense' },
     ];
 
     // Discard
@@ -101,22 +103,30 @@ document.addEventListener("DOMContentLoaded", () => {
                         if (player.energy >= card.cost){
                                 player.energy -= card.cost;
                                 let attackValue = (card.attack + player.strength);
-                                if (enemy.vulnerable > 0){
+                                if (enemy.vulnerable > 0) {
                                     attackValue *= 1.5
                                 }
-                                    while (attackValue > 0 && enemy.defense > 0) {
-                                        enemy.defense -= 1;
-                                        attackValue -= 1;
-                                    }
-                                enemy.hitPoints -= attackValue;
-                                if(card.defense !== undefined){
-                                player.defense += card.defense;
-                                }
-                                if(card.strength !== undefined) {
-                                    player.strength += card.strength;
-                                }
-                                if(card.applyVulnerable !== undefined){
-                                    enemy.vulnerable += card.applyVulnerable;
+                                switch (card.name) {
+                                    case "Defend":
+                                        player.defense += card.defense;
+                                        break;
+                                    case "Punch":
+                                        damageApply(attackValue);
+                                        break;
+                                    case "Really Angry Yelling":
+                                        damageApply(attackValue);
+                                        enemy.vulnerable += card.applyVulnerable;
+                                        break;
+                                    case "Shell Harden":
+                                        player.strength += card.gainStrength;
+                                        updatePlayer();
+                                        break;
+                                    case "Shell Slam":
+                                        damageApply(attackValue);
+                                        player.defense += card.defense;
+                                        break;
+                                    default:
+                                        break;
                                 }
                                 updatePlayer();
                                 updateEnemy();
@@ -127,7 +137,7 @@ document.addEventListener("DOMContentLoaded", () => {
                                 this.remove(this);
                                 handSize -= 1;
                         } else {
-                            console.log("You have not enough energy");
+                            alert("You have not enough energy");
                         }
                     })
         }
@@ -145,11 +155,22 @@ document.addEventListener("DOMContentLoaded", () => {
         }
     }
 
+    function damageApply(attackValue){
+        while (attackValue > 0 && enemy.defense > 0) {
+            enemy.defense -= 1;
+            attackValue -= 1;
+        }
+        enemy.hitPoints -= attackValue;
+    }
+
     function updatePlayer() {
         let stats = document.querySelector(".stats");
         stats.innerHTML = `Hit Points:${player.hitPoints}    Energy: ${player.energy}`;
         if(player.defense > 0){
-            stats.innerHTML = `Hit Points:${player.hitPoints}    Energy: ${player.energy} Defense: ${player.defense}`
+            stats.innerHTML += ` Defense: ${player.defense}`
+        }
+        if(player.strength > 0){
+            stats.innerHTML += ` Strength: ${player.strength}`
         }
     }
 
