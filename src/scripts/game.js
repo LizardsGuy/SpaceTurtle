@@ -11,7 +11,7 @@ document.addEventListener("DOMContentLoaded", () => {
 
     // Monster
     let enemy = {
-        name: "Slimey", maxHealth: 40, hitPoints: 40, defense: 0, strength: 0, vulnerable: 0, weak: 0, moves: [
+        name: "Grumby", maxHealth: 40, hitPoints: 40, defense: 0, strength: 0, vulnerable: 0, weak: 0, moves: [
             { name: 'Bop', impact: "attack", attack: 5 },
             { name: 'Cower', impact: "defend", defense: 5 }
         ]}
@@ -28,7 +28,7 @@ document.addEventListener("DOMContentLoaded", () => {
                         { name: 'Cower', impact: "defend", defense: 5 }
                     ]
         },
-        { name: "Grumby's Angry Older Brother, Charles", 
+        { name: "Grumby's Older Brother, Charles", 
                     maxHealth: 60, 
                     hitPoints: 60, 
                     defense: 0, 
@@ -42,7 +42,8 @@ document.addEventListener("DOMContentLoaded", () => {
                     { name: "'Ima have to sit this one out'", impact: "defend", defense: 10}
                     ]
         },
-        { name: "The Goblin Kings assasin",
+        {
+            name: "The Goblin Kings Assassin",
                 maxHealth: 120,
                 hitPoints: 120,
                 defense: 0,
@@ -50,12 +51,12 @@ document.addEventListener("DOMContentLoaded", () => {
                 vulnerable: 0,
                 weak: 0,
                 moves: [
-                    {name: "'You've been causing problems'", impact: "embolden", defense: 15, gainStrength: 1},
-                    {name: "'Sharpening my blades...'", impact: "embolden", defense: 8, gainStrength: 2},
-                    {name: "'You will pay for your incursion...'", impact: "attack", attack: 1},
-                    {name: "'You will pay for your incursion...'", impact: "attack", attack: 1 },
-                    {name: "' LeAvE No W ww W '", impact: "attack", attack: 4},
-                    {name: "' huh...huh...'", impact: "defend", defense: 10}
+                    {name: "'You've been causing problems...'", impact: "embolden", defense: 15, gainStrength: 1},
+                    {name: "'Sharpening my blades...'", impact: "embolden", defense: 5, gainStrength: 2},
+                    {name: "'You will pay for your incursion...'", impact: "embiggen", attack: 1, gainStrength: 1},
+                    {name: "'These blades only get stronger...'", impact: "embiggen", attack: 1, gainStrength: 1},
+                    {name: "' Better run kid...'", impact: "embiggen", attack: 1, gainStrength: 1},
+                    {name: "' huh...'", impact: "defend", defense: 15}
                 ]
         }
     ]
@@ -71,11 +72,12 @@ document.addEventListener("DOMContentLoaded", () => {
     // All Cards
 
     const allCards = [
-        { name: "Defend", defense: 5, cost: 1, description: 'Gain 5 defense' },
-        { name: "Punch", attack: 6, cost: 1, description: 'Deal 6 damage' },
+        // { name: "Defend", defense: 5, cost: 1, description: 'Gain 5 defense' },
+        // { name: "Punch", attack: 6, cost: 1, description: 'Deal 6 damage' },
         { name: "Really Angry Yelling", attack: 8, cost: 2, applyVulnerable: 2, description: 'Deal 8 damage. Apply 2 Vulnerable (enemy takes 50% more damage)'},
         { name: "Shell Harden", cost: 2, gainStrength: 2, description: 'Gain 2 strength this combat' },
-        { name: "Shell Slam", attack: 5, defense: 5, cost: 1, description: 'Deal 5 damage. Gain 5 defense' }
+        { name: "Shell Slam", attack: 5, defense: 5, cost: 1, description: 'Deal 5 damage. Gain 5 defense' },
+        { name: "Tip-Top-Tep-Tup-Tap", attack: 2, defense: 0, cost: 1, description: 'Deal 1 damage 5 times.'}
     ]
 
     // Deck
@@ -92,6 +94,7 @@ document.addEventListener("DOMContentLoaded", () => {
         { name: "Defend", defense: 5, cost: 1, description: 'Gain 5 defense' },
         { name: "Defend", defense: 5, cost: 1, description: 'Gain 5 defense' },
         { name: "Defend", defense: 5, cost: 1, description: 'Gain 5 defense' },
+        { name: "Tip-Top-Tep-Tup-Tap", attack: 1, defense: 0, cost: 2, description: 'Deal 1 damage 4 times.' },
         { name: "Shell Harden", cost: 2, gainStrength: 2, description: 'Gain 2 strength this combat' },
         { name: "Really Angry Yelling", attack: 8, defense: 0, cost: 2, applyVulnerable: 2, description: `Deal ${8 + player.strength} damage. Apply 2 Vulnerable (enemy takes 50% more damage)` },
         // { name: "Shell Slam", attack: 5, defense: 5, cost: 1, description: 'Deal 5 damage. Gain 5 defense' },
@@ -166,25 +169,29 @@ document.addEventListener("DOMContentLoaded", () => {
                                         break;
                                     case "Shell Harden":
                                         player.strength += card.gainStrength;
-                                        updatePlayer();
                                         break;
                                     case "Shell Slam":
                                         damageApply(attackValue);
                                         player.defense += card.defense;
+                                        break;
+                                    case "Tip-Top-Tep-Tup-Tap":
+                                        let i = 0
+                                        while(i < 4){
+                                            damageApply(attackValue);
+                                            i += 1
+                                        }
                                         break;
                                     default:
                                         break;
                                 }
                                 updatePlayer();
                                 updateEnemy();
-                                if(checkEnemyDeath() === true){
-                                } else { 
-                                    debugger;
-                                index = hand.indexOf(card);
-                                discard.push(card);
-                                hand.splice(index, 1);
-                                this.remove(this);
-                                handSize -= 1;
+                                if(checkEnemyDeath() === false){
+                                    index = hand.indexOf(card);
+                                    discard.push(card);
+                                    hand.splice(index, 1);
+                                    this.remove(this);
+                                    handSize -= 1;
                                 }
                         } else {
                             alert("You have not enough energy");
@@ -201,7 +208,6 @@ document.addEventListener("DOMContentLoaded", () => {
             intention();
             enemy.weak = 0;
             enemy.vulnerable = 0;
-            updateEnemy();
             cards = document.querySelectorAll('li');
             cards.forEach(function (card) {
                 card.remove();
@@ -211,7 +217,9 @@ document.addEventListener("DOMContentLoaded", () => {
                 handSize -= 1;
             })
             hand = [];
-            drawHand();
+            addCard();
+            // drawHand();
+            updateEnemy();
             player.strength = player.baseStrength;
             player.energy = player.maxEnergy;
             player.defense = 0;
@@ -270,8 +278,10 @@ document.addEventListener("DOMContentLoaded", () => {
             enemyStats.innerHTML += ` <br> Vulnerable: ${enemy.vulnerable}`;
         }
     }
-    
+
+    let endTurnDisabler = false;
     function endTurn(){
+        if (endTurnDisabler === false){
         cards = document.querySelectorAll('li');
         cards.forEach(function(card){
             card.remove();
@@ -281,6 +291,7 @@ document.addEventListener("DOMContentLoaded", () => {
             handSize -= 1;
         })
         enemyTurn();
+        } 
     }
 
     function intention() {
@@ -298,6 +309,9 @@ document.addEventListener("DOMContentLoaded", () => {
                 break;
             case "embolden":
                 intent.innerHTML = `Defend: ${intentMove.defense} Strength Gain: ${intentMove.gainStrength}`
+                break;
+            case "embiggen":
+                intent.innerHTML = `Attack: ${intentMove.attack} Strength Gain: ${intentMove.gainStrength}`
                 break;
             default:
                 break;
@@ -322,6 +336,15 @@ document.addEventListener("DOMContentLoaded", () => {
                 enemy.strength += intentMove.gainStrength;
                 enemy.defense += intentMove.defense;
                 updateEnemy();
+                break;
+            case "embiggen":
+                let attackValue2 = (intentMove.attack + enemy.strength);
+                while (attackValue2 > 0 && player.defense > 0) {
+                    player.defense -= 1;
+                    attackValue2 -= 1;
+                }
+                player.hitPoints -= attackValue2;
+                enemy.strength += intentMove.gainStrength;
                 break;
             default:
                 break;
@@ -349,8 +372,60 @@ document.addEventListener("DOMContentLoaded", () => {
         }
     }
 
+    function addCard(){
+        let text = document.querySelector(".addCard")
+        text.innerHTML = "CHOOSE A CARD TO ADD TO YOUR DECK"
+        endTurnDisabler = true;
+        let choices = [];
+        let i = 0
+        while(i < 3){
+            let random = Math.floor(Math.random() * allCards.length)
+            let card = allCards[random]
+            index = allCards.indexOf(card);
+            choices.push(card)
+            allCards.splice(index, 1);
+            i += 1
+        }
+        //// Debugger is paused on when the three chosen cards should be displayed.
+        //// issue is how to  make the original function wait for this choice before continuing.
+        let choiceList = document.querySelector('.card-list');
+        choices.forEach(function(card){
+            let cardLi = document.createElement("li");
+            let cardText = document.createElement("div");
+            cardText.className = "cardText";
+            let cardName = document.createElement("div");
+            cardName.className = "cardName";
+            cardName.innerHTML = `${card.name}`;
+            let cardCost = document.createElement("div");
+            cardCost.className = "cardCost";
+            cardCost.innerHTML = `(${card.cost})`;
+            let cardDescription = document.createElement("div");
+            cardDescription.className = "cardDescription";
+            cardDescription.innerHTML = `${card.description}`;
+            cardLi.className = 'Card';
+            cardText.appendChild(cardName);
+            cardText.appendChild(cardCost);
+            cardText.appendChild(cardDescription);
+            cardLi.appendChild(cardText);
+            choiceList.appendChild(cardLi);
+            cardLi.addEventListener('click',
 
-     // Turn
+                function () {
+                    deck.push(card);
+                    cards = document.querySelectorAll('li');
+                    cards.forEach(function (card) {
+                        card.remove();
+                    })
+                    drawHand();
+                    endTurnDisabler = false;
+                    let text = document.querySelector(".addCard")
+                    text.innerHTML = ""
+                })
+        })
+    }
+
+
+     // Game start
     updatePlayer();
     updateEnemy();
     drawHand();
