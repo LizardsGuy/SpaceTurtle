@@ -69,6 +69,13 @@ ul{
     background-repeat: no-repeat;
 }
 
+.enemyImg2{
+    background-image: url("./goblin3.png"); 
+    background-size: contain;
+    height: 80%;
+    background-repeat: no-repeat;
+}
+
 .enemyName{
     text-align: center;
     color: lightcoral;

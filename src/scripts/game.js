@@ -6,19 +6,17 @@ document.addEventListener("DOMContentLoaded", () => {
     })
 
     // Player
-    let nothing = 0;
     const player = { name: "SpaceTurtle", baseStrength: 0, strength: 0, defense: 0, maxHealth:50, hitPoints: 50, maxEnergy:3, energy: 3}
   
 
     // Monster
-
     let enemy = {
         name: "Slimey", maxHealth: 40, hitPoints: 40, defense: 0, strength: 0, vulnerable: 0, weak: 0, moves: [
             { name: 'Bop', impact: "attack", attack: 5 },
             { name: 'Cower', impact: "defend", defense: 5 }
         ]}
     const enemies = [
-        { name: "Slimey", 
+        { name: "Grumby", 
                     maxHealth: 40,             
                     hitPoints: 40,             
                     defense: 0,            
@@ -29,20 +27,37 @@ document.addEventListener("DOMContentLoaded", () => {
                         { name: '"Bop"', impact: "attack", attack: 5 },
                         { name: 'Cower', impact: "defend", defense: 5 }
                     ]
-                },
-        { name: "Slimey's Angry Older Brother", 
-                    maxHealth: 50, 
-                    hitPoints: 50, 
+        },
+        { name: "Grumby's Angry Older Brother, Charles", 
+                    maxHealth: 60, 
+                    hitPoints: 60, 
                     defense: 0, 
                     strength: 0, 
                     vulnerable: 0, 
                     weak: 0,           
                     moves: [
-                    { name: "'Ima bop ya!'", impact: "attack", attack: 10 },
+                    { name: "'Where's my brudda?'", impact: "defend", defense: 15},
+                    { name: "'Ima bop ya!'", impact: "attack", attack: 8 },
                     { name: "'Ima smash ya!'", impact: "attack", attack: 12 },
                     { name: "'Ima have to sit this one out'", impact: "defend", defense: 10}
-            ]
-                }
+                    ]
+        },
+        { name: "The Goblin Kings assasin",
+                maxHealth: 120,
+                hitPoints: 120,
+                defense: 0,
+                strength: 0,
+                vulnerable: 0,
+                weak: 0,
+                moves: [
+                    {name: "'You've been causing problems'", impact: "embolden", defense: 15, gainStrength: 1},
+                    {name: "'Sharpening my blades...'", impact: "embolden", defense: 8, gainStrength: 2},
+                    {name: "'You will pay for your incursion...'", impact: "attack", attack: 1},
+                    {name: "'You will pay for your incursion...'", impact: "attack", attack: 1 },
+                    {name: "' LeAvE No W ww W '", impact: "attack", attack: 4},
+                    {name: "' huh...huh...'", impact: "defend", defense: 10}
+                ]
+        }
     ]
     // const enemyMoves = [
     //     {name: 'Attack', attack: 5},
@@ -242,6 +257,9 @@ document.addEventListener("DOMContentLoaded", () => {
         if (enemy.defense > 0) {
             enemyStats.innerHTML += ` <br> Defense: ${enemy.defense}`;
         }
+        if (enemy.strength > 0) {
+            enemyStats.innerHTML += `<br> Strength: ${enemy.strength}`
+        }
         if (enemy.vulnerable > 0){
             enemyStats.innerHTML += ` <br> Vulnerable: ${enemy.vulnerable}`;
         }
@@ -265,12 +283,18 @@ document.addEventListener("DOMContentLoaded", () => {
         let intentName = document.querySelector('.intentName');
         intentMove = enemy.moves[random];
         intentName.innerHTML = `${intentMove.name}`
-        if (intentMove.attack !== undefined && intentMove.defend !== undefined){
-            intent.innerHTML = `Attack:${intentMove.attack}    Defend: ${intentMove.defense}`;
-        } else if (intentMove.attack !== undefined){
-            intent.innerHTML = `Attack: ${intentMove.attack}`;
-        } else {
-            intent.innerHTML = `Defend: ${intentMove.defense}`;
+        switch (intentMove.impact) {
+            case "attack":
+                intent.innerHTML = `Attack: ${intentMove.attack}`;
+                break;
+            case "defend":
+                intent.innerHTML = `Defend: ${intentMove.defense}`;
+                break;
+            case "embolden":
+                intent.innerHTML = `Defend: ${intentMove.defense} Strength Gain: ${intentMove.gainStrength}`
+                break;
+            default:
+                break;
         }
     }
 
@@ -278,13 +302,18 @@ document.addEventListener("DOMContentLoaded", () => {
         enemy.defense = 0;
         switch (intentMove.impact){
             case "attack":
-                let attackValue = intentMove.attack;
+                let attackValue = (intentMove.attack + enemy.strength);
                 while (attackValue > 0 && player.defense > 0){
                     player.defense -= 1;
                     attackValue -= 1;
                 }
                 player.hitPoints -= attackValue;
             case "defend":
+                enemy.defense += intentMove.defense;
+                updateEnemy();
+                break;
+            case "embolden":
+                enemy.strength += intentMove.gainStrength;
                 enemy.defense += intentMove.defense;
                 updateEnemy();
                 break;
