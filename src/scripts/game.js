@@ -75,9 +75,11 @@ document.addEventListener("DOMContentLoaded", () => {
         // { name: "Punch", attack: 6, cost: 1, description: 'Deal 6 damage' },
         { name: "Really Angry Yelling", attack: 8, cost: 2, applyVulnerable: 2, description: 'Deal 8 damage. Apply 2 Vulnerable (enemy takes 50% more damage).'},
         { name: "Shell Harden", cost: 2, gainStrength: 2, description: 'Gain 2 strength this combat.' },
-        { name: "Shell Slam", attack: 5, defense: 5, cost: 1, description: 'Deal 5 damage. Gain 5 defense' },
+        { name: "Defensive Attack", attack: 5, defense: 5, cost: 1, description: 'Deal 5 damage. Gain 5 defense' },
         { name: "Tip-Top-Tep-Tup-Tap", attack: 1, defense: 0, cost: 1, description: 'Deal 1 damage 5 times.'},
-        { name: "Shrug It Off", defense: 8, cost: 1, description: "Gain 8 block. Draw 1 card"}
+        { name: "Shrug It Off", defense: 8, cost: 1, description: "Gain 8 defense. Draw 1 card"},
+        { name: "Body Slam", attack: player.defense, cost: 1, description: "Deal damage equal to your defense"}
+        // { name: "Growing Rage", attack: 7, cost: 0, description: "Attack for 7. Add a copy of this card to your discard"}
         // { name: "Thwack", attack: 10, applyWeak: 2, cost: 2, description: 'Deal 10 damage. Apply 2 Weak (enemy deals 50% less damage).'},
         // { name: "Flex", gainTurnStrength: 3, cost: 0, description: "Gain 3 Strength. At the end of the turn, lose 3 strength."},
         // { name: "Powerful Bomp", attack: 14, cost: 2, description: "Deal 14 damage. Strength affects this card 3 times."}
@@ -150,6 +152,7 @@ document.addEventListener("DOMContentLoaded", () => {
     function checkPlayerDeath(){
         if(player.hitPoints <= 0){
             alert('you lose');
+            location.reload();
         }
     }
 
@@ -335,6 +338,9 @@ document.addEventListener("DOMContentLoaded", () => {
                         attackValue *= 1.5
                     }
                     switch (card.name) {
+                        case "Body Slam":
+                            damageApply(player.defense);
+                            break;
                         case "Defend":
                             player.defense += card.defense;
                             handSize -= 1;
@@ -352,7 +358,7 @@ document.addEventListener("DOMContentLoaded", () => {
                             player.strength += card.gainStrength;
                             handSize -= 1;
                             break;
-                        case "Shell Slam":
+                        case "Defensive Attack":
                             damageApply(attackValue);
                             player.defense += card.defense;
                             handSize -= 1;
