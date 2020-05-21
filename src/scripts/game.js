@@ -177,12 +177,15 @@ document.addEventListener("DOMContentLoaded", () => {
                                 }
                                 updatePlayer();
                                 updateEnemy();
-                                checkEnemyDeath();
+                                if(checkEnemyDeath() === true){
+                                } else { 
+                                    debugger;
                                 index = hand.indexOf(card);
                                 discard.push(card);
                                 hand.splice(index, 1);
                                 this.remove(this);
                                 handSize -= 1;
+                                }
                         } else {
                             alert("You have not enough energy");
                         }
@@ -213,6 +216,9 @@ document.addEventListener("DOMContentLoaded", () => {
             player.energy = player.maxEnergy;
             player.defense = 0;
             updatePlayer();
+            return true;
+        } else{
+            return false;
         }
     }
 
