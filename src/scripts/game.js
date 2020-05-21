@@ -42,8 +42,7 @@ document.addEventListener("DOMContentLoaded", () => {
                     { name: "'Ima have to sit this one out'", impact: "defend", defense: 10}
                     ]
         },
-        {
-            name: "The Goblin Kings Assassin",
+        { name: "The Goblin Kings Assassin",
                 maxHealth: 120,
                 hitPoints: 120,
                 defense: 0,
@@ -74,10 +73,14 @@ document.addEventListener("DOMContentLoaded", () => {
     const allCards = [
         // { name: "Defend", defense: 5, cost: 1, description: 'Gain 5 defense' },
         // { name: "Punch", attack: 6, cost: 1, description: 'Deal 6 damage' },
-        { name: "Really Angry Yelling", attack: 8, cost: 2, applyVulnerable: 2, description: 'Deal 8 damage. Apply 2 Vulnerable (enemy takes 50% more damage)'},
-        { name: "Shell Harden", cost: 2, gainStrength: 2, description: 'Gain 2 strength this combat' },
+        { name: "Really Angry Yelling", attack: 8, cost: 2, applyVulnerable: 2, description: 'Deal 8 damage. Apply 2 Vulnerable (enemy takes 50% more damage).'},
+        { name: "Shell Harden", cost: 2, gainStrength: 2, description: 'Gain 2 strength this combat.' },
         { name: "Shell Slam", attack: 5, defense: 5, cost: 1, description: 'Deal 5 damage. Gain 5 defense' },
-        { name: "Tip-Top-Tep-Tup-Tap", attack: 2, defense: 0, cost: 1, description: 'Deal 1 damage 5 times.'}
+        { name: "Tip-Top-Tep-Tup-Tap", attack: 1, defense: 0, cost: 1, description: 'Deal 1 damage 5 times.'},
+        { name: "Shrug It Off", defense: 8, cost: 1, description: "Gain 8 block. Draw 1 card"}
+        // { name: "Thwack", attack: 10, applyWeak: 2, cost: 2, description: 'Deal 10 damage. Apply 2 Weak (enemy deals 50% less damage).'},
+        // { name: "Flex", gainTurnStrength: 3, cost: 0, description: "Gain 3 Strength. At the end of the turn, lose 3 strength."},
+        // { name: "Powerful Bomp", attack: 14, cost: 2, description: "Deal 14 damage. Strength affects this card 3 times."}
     ]
 
     // Deck
@@ -93,11 +96,7 @@ document.addEventListener("DOMContentLoaded", () => {
         { name: "Defend", defense: 5, cost: 1, description: 'Gain 5 defense' },
         { name: "Defend", defense: 5, cost: 1, description: 'Gain 5 defense' },
         { name: "Defend", defense: 5, cost: 1, description: 'Gain 5 defense' },
-        { name: "Defend", defense: 5, cost: 1, description: 'Gain 5 defense' },
-        { name: "Tip-Top-Tep-Tup-Tap", attack: 1, defense: 0, cost: 2, description: 'Deal 1 damage 4 times.' },
-        { name: "Shell Harden", cost: 2, gainStrength: 2, description: 'Gain 2 strength this combat' },
-        { name: "Really Angry Yelling", attack: 8, defense: 0, cost: 2, applyVulnerable: 2, description: `Deal ${8 + player.strength} damage. Apply 2 Vulnerable (enemy takes 50% more damage)` },
-        // { name: "Shell Slam", attack: 5, defense: 5, cost: 1, description: 'Deal 5 damage. Gain 5 defense' },
+        { name: "Really Angry Yelling", attack: 8, defense: 0, cost: 2, applyVulnerable: 2, description: `Deal 8 damage. Apply 2 Vulnerable (enemy takes 50% more damage)` }
     ];
 
     // Discard
@@ -112,91 +111,9 @@ document.addEventListener("DOMContentLoaded", () => {
 
     // Gameplay Functions
     function drawHand() {
-        let cardList = document.querySelector('.card-list');
         // Draw Cards
-        for (let draw = 0; draw < drawAmount && handSize !== maxHandSize; draw++) {
-     
-            if (deck.length === 0) {
-                deck = discard.slice();
-                shuffle(deck);
-                discard = [];
-            }
-         
-            handSize += 1;
-            let random = Math.floor(Math.random() * deck.length);
-            let card = deck[random];
-            deck.splice(random, 1);
-            hand.push(card);
-            let cardLi = document.createElement("li");
-            let cardText = document.createElement("div");
-            cardText.className = "cardText";
-            let cardName = document.createElement("div");
-            cardName.className = "cardName";
-            cardName.innerHTML = `${card.name}`;
-            let cardCost = document.createElement("div");
-            cardCost.className = "cardCost";
-            cardCost.innerHTML = `(${card.cost})`;
-            let cardDescription = document.createElement("div");
-            cardDescription.className = "cardDescription";
-            cardDescription.innerHTML = `${card.description}`;
-            cardLi.className = 'Card';
-            cardText.appendChild(cardName);
-            cardText.appendChild(cardCost);
-            cardText.appendChild(cardDescription);
-            cardLi.appendChild(cardText);
-            cardList.appendChild(cardLi);
-
-            // playing a card
-            cardLi.addEventListener('click',
-    
-                    function () {
-                        if (player.energy >= card.cost){
-                                player.energy -= card.cost;
-                                let attackValue = (card.attack + player.strength);
-                                if (enemy.vulnerable > 0) {
-                                    attackValue *= 1.5
-                                }
-                                switch (card.name) {
-                                    case "Defend":
-                                        player.defense += card.defense;
-                                        break;
-                                    case "Punch":
-                                        damageApply(attackValue);
-                                        break;
-                                    case "Really Angry Yelling":
-                                        damageApply(attackValue);
-                                        enemy.vulnerable += card.applyVulnerable;
-                                        break;
-                                    case "Shell Harden":
-                                        player.strength += card.gainStrength;
-                                        break;
-                                    case "Shell Slam":
-                                        damageApply(attackValue);
-                                        player.defense += card.defense;
-                                        break;
-                                    case "Tip-Top-Tep-Tup-Tap":
-                                        let i = 0
-                                        while(i < 4){
-                                            damageApply(attackValue);
-                                            i += 1
-                                        }
-                                        break;
-                                    default:
-                                        break;
-                                }
-                                updatePlayer();
-                                updateEnemy();
-                                if(checkEnemyDeath() === false){
-                                    index = hand.indexOf(card);
-                                    discard.push(card);
-                                    hand.splice(index, 1);
-                                    this.remove(this);
-                                    handSize -= 1;
-                                }
-                        } else {
-                            alert("You have not enough energy");
-                        }
-                    })
+        for (let draw = 0; draw < drawAmount; draw++) {
+            drawCard();
         }
     }
 
@@ -372,6 +289,105 @@ document.addEventListener("DOMContentLoaded", () => {
         }
     }
 
+    function drawCard(){
+        let cardList = document.querySelector('.card-list');
+        if (handSize >= maxHandSize){
+            alert('Your hand is full!');
+        } else {
+        if (deck.length === 0) {
+            deck = discard.slice();
+            shuffle(deck);
+            discard = [];
+        }
+
+        handSize += 1;
+        let random = Math.floor(Math.random() * deck.length);
+        let card = deck[random];
+        deck.splice(random, 1);
+        hand.push(card);
+        let cardLi = document.createElement("li");
+        let cardText = document.createElement("div");
+        cardText.className = "cardText";
+        let cardName = document.createElement("div");
+        cardName.className = "cardName";
+        cardName.innerHTML = `${card.name}`;
+        let cardCost = document.createElement("div");
+        cardCost.className = "cardCost";
+        cardCost.innerHTML = `(${card.cost})`;
+        let cardDescription = document.createElement("div");
+        cardDescription.className = "cardDescription";
+        cardDescription.innerHTML = `${card.description}`;
+        cardLi.className = 'Card';
+        cardText.appendChild(cardName);
+        cardText.appendChild(cardCost);
+        cardText.appendChild(cardDescription);
+        cardLi.appendChild(cardText);
+        cardList.appendChild(cardLi);
+
+        // playing a card
+        cardLi.addEventListener('click',
+
+            function () {
+                if (player.energy >= card.cost) {
+                    player.energy -= card.cost;
+                    let attackValue = (card.attack + player.strength);
+                    if (enemy.vulnerable > 0) {
+                        attackValue *= 1.5
+                    }
+                    switch (card.name) {
+                        case "Defend":
+                            player.defense += card.defense;
+                            handSize -= 1;
+                            break;
+                        case "Punch":
+                            damageApply(attackValue);
+                            handSize -= 1;
+                            break;
+                        case "Really Angry Yelling":
+                            damageApply(attackValue);
+                            enemy.vulnerable += card.applyVulnerable;
+                            handSize -= 1;
+                            break;
+                        case "Shell Harden":
+                            player.strength += card.gainStrength;
+                            handSize -= 1;
+                            break;
+                        case "Shell Slam":
+                            damageApply(attackValue);
+                            player.defense += card.defense;
+                            handSize -= 1;
+                            break;
+                        case "Shrug It Off":
+                            player.defense += card.defense;
+                            handSize -= 1;
+                            drawCard();
+                            break;
+                        case "Tip-Top-Tep-Tup-Tap":
+                            let i = 0
+                            while (i < 5) {
+                                damageApply(attackValue);
+                                i += 1
+                            }
+                            handSize -= 1;
+                            break;
+                        default:
+                            break;
+                        }
+                    updatePlayer();
+                    updateEnemy();
+                    if (checkEnemyDeath() === false) {
+                        index = hand.indexOf(card);
+                        discard.push(card);
+                        hand.splice(index, 1);
+                        this.remove(this);
+                    }
+                } else {
+                    alert("You have not enough energy");
+                }
+            })
+        }
+    }
+
     function addCard(){
         let text = document.querySelector(".addCard")
         text.innerHTML = "CHOOSE A CARD TO ADD TO YOUR DECK"
@@ -415,6 +431,9 @@ document.addEventListener("DOMContentLoaded", () => {
                     cards = document.querySelectorAll('li');
                     cards.forEach(function (card) {
                         card.remove();
+                    })
+                    choices.forEach(function (card){
+                        allCards.push(card);
                     })
                     drawHand();
                     endTurnDisabler = false;
