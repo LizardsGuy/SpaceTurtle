@@ -37,9 +37,9 @@ document.addEventListener("DOMContentLoaded", () => {
                     weak: 0,           
                     moves: [
                     { name: "'Where's my brudda?'", impact: "defend", defense: 15},
-                    { name: "'Ima bop ya!'", impact: "attack", attack: 8 },
-                    { name: "'Ima smash ya!'", impact: "attack", attack: 12 },
-                    { name: "'Ima have to sit this one out'", impact: "defend", defense: 10}
+                    { name: "'I'm bop ya!'", impact: "attack", attack: 8 },
+                    { name: "'I'm smash ya!'", impact: "attack", attack: 12 },
+                    { name: "'I'm take a break!'", impact: "defend", defense: 10}
                     ]
         },
         { name: "The Goblin Kings Assassin",
@@ -55,7 +55,7 @@ document.addEventListener("DOMContentLoaded", () => {
                     {name: "'You will pay for your incursion...'", impact: "embiggen", attack: 1, gainStrength: 1},
                     {name: "'These blades only get stronger...'", impact: "embiggen", attack: 1, gainStrength: 1},
                     {name: "' Better run kid...'", impact: "embiggen", attack: 1, gainStrength: 1},
-                    {name: "' huh...'", impact: "defend", defense: 15}
+                    {name: "' huh...'", impact: "defend", defense: 20}
                 ]
         }
     ]
@@ -74,7 +74,7 @@ document.addEventListener("DOMContentLoaded", () => {
         // { name: "Defend", defense: 5, cost: 1, description: 'Gain 5 defense' },
         // { name: "Punch", attack: 6, cost: 1, description: 'Deal 6 damage' },
         { name: "Really Angry Yelling", attack: 8, cost: 2, applyVulnerable: 2, description: 'Deal 8 damage. Apply 2 Vulnerable (enemy takes 50% more damage).'},
-        { name: "Shell Harden", cost: 2, gainStrength: 2, description: 'Gain 2 strength this combat.' },
+        { name: "Shell Harden", cost: 2, gainStrength: 2, exhaust: true, description: 'Gain 2 strength this combat. Exhaust (card removed this battle).' },
         { name: "Defensive Attack", attack: 5, defense: 5, cost: 1, description: 'Deal 5 damage. Gain 5 defense' },
         { name: "Tip-Top-Tep-Tup-Tap", attack: 1, defense: 0, cost: 1, description: 'Deal 1 damage 5 times.'},
         { name: "Shrug It Off", defense: 8, cost: 1, description: "Gain 8 defense. Draw 1 card"},
@@ -84,6 +84,8 @@ document.addEventListener("DOMContentLoaded", () => {
         // { name: "Flex", gainTurnStrength: 3, cost: 0, description: "Gain 3 Strength. At the end of the turn, lose 3 strength."},
         // { name: "Powerful Bomp", attack: 14, cost: 2, description: "Deal 14 damage. Strength affects this card 3 times."}
     ]
+
+    const exhaustCards = []
 
     // Deck
 
@@ -134,6 +136,9 @@ document.addEventListener("DOMContentLoaded", () => {
             hand.forEach(function (card) {
                 discard.push(card);
                 handSize -= 1;
+            })
+            exhaustCards.forEach(function (card){
+                discard.push(card);
             })
             hand = [];
             addCard();
@@ -345,6 +350,11 @@ document.addEventListener("DOMContentLoaded", () => {
                             player.defense += card.defense;
                             handSize -= 1;
                             break;
+                        case "Defensive Attack":
+                            damageApply(attackValue);
+                            player.defense += card.defense;
+                            handSize -= 1;
+                            break;
                         case "Punch":
                             damageApply(attackValue);
                             handSize -= 1;
@@ -357,11 +367,8 @@ document.addEventListener("DOMContentLoaded", () => {
                         case "Shell Harden":
                             player.strength += card.gainStrength;
                             handSize -= 1;
-                            break;
-                        case "Defensive Attack":
-                            damageApply(attackValue);
-                            player.defense += card.defense;
-                            handSize -= 1;
+                            exhaust(card);
+                            this.remove(this);
                             break;
                         case "Shrug It Off":
                             player.defense += card.defense;
@@ -383,8 +390,10 @@ document.addEventListener("DOMContentLoaded", () => {
                     updateEnemy();
                     if (checkEnemyDeath() === false) {
                         index = hand.indexOf(card);
+                        if(card.exhaust !== true){
                         discard.push(card);
                         hand.splice(index, 1);
+                        }
                         this.remove(this);
                     }
                 } else {
@@ -408,8 +417,6 @@ document.addEventListener("DOMContentLoaded", () => {
             allCards.splice(index, 1);
             i += 1
         }
-        //// Debugger is paused on when the three chosen cards should be displayed.
-        //// issue is how to  make the original function wait for this choice before continuing.
         let choiceList = document.querySelector('.card-list');
         choices.forEach(function(card){
             let cardLi = document.createElement("li");
@@ -447,6 +454,12 @@ document.addEventListener("DOMContentLoaded", () => {
                     text.innerHTML = ""
                 })
         })
+    }
+
+    function exhaust(card){
+        index = hand.indexOf(card);
+        exhaustCards.push(card);
+        hand.splice(index, 1);
     }
 
 
