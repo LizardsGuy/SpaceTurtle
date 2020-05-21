@@ -12,8 +12,8 @@ document.addEventListener("DOMContentLoaded", () => {
     // Monster
     let enemy = {
         name: "Grumby", maxHealth: 40, hitPoints: 40, defense: 0, strength: 0, vulnerable: 0, weak: 0, moves: [
-            { name: 'Bop', impact: "attack", attack: 5 },
-            { name: 'Cower', impact: "defend", defense: 5 }
+            { name: 'Bop', impact: "attack", attack: 6 },
+            { name: 'Cower', impact: "defend", defense: 6 }
         ]}
     const enemies = [
         { name: "Grumby", 
@@ -24,8 +24,8 @@ document.addEventListener("DOMContentLoaded", () => {
                     vulnerable: 0,               
                     weak: 0,
                     moves: [
-                        { name: '"Bop"', impact: "attack", attack: 5 },
-                        { name: 'Cower', impact: "defend", defense: 5 }
+                        { name: '"Bop"', impact: "attack", attack: 6 },
+                        { name: 'Cower', impact: "defend", defense: 6 }
                     ]
         },
         { name: "Grumby's Older Brother, Charles", 
