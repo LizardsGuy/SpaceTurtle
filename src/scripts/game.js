@@ -5,6 +5,19 @@ document.addEventListener("DOMContentLoaded", () => {
         endTurn();
     })
 
+    let start = document.querySelector(".start");
+    start.addEventListener('click',
+        function () {
+            let main = document.querySelector(".main");
+            let start = document.querySelector(".startScreen");
+            let how = document.querySelector(".howTo");
+            start.style.display = "none";
+            how.style.display = "none";
+            main.style.display = "flex";
+        }
+
+    )
+
     // Player
     const player = { name: "SpaceTurtle", baseStrength: 0, strength: 0, defense: 0, maxHealth:50, hitPoints: 50, maxEnergy:3, energy: 3}
   
@@ -124,6 +137,10 @@ document.addEventListener("DOMContentLoaded", () => {
     function checkEnemyDeath(){
         if(enemy.hitPoints <= 0){
             currentLevel += 1;
+            if(currentLevel === enemies.length){
+                winGame();
+            } else {
+            debugger;
             alert(`You have defeated the enemy! Welcome to level ${currentLevel + 1}`)
             enemy = enemies[currentLevel];
             intention();
@@ -149,6 +166,7 @@ document.addEventListener("DOMContentLoaded", () => {
             player.defense = 0;
             updatePlayer();
             return true;
+        }
         } else{
             return false;
         }
@@ -456,10 +474,28 @@ document.addEventListener("DOMContentLoaded", () => {
         })
     }
 
+    // function winGame(){
+    //     if 
+    // }
+
     function exhaust(card){
         index = hand.indexOf(card);
         exhaustCards.push(card);
         hand.splice(index, 1);
+    }
+
+    function winGame(){
+        let restart = document.querySelector(".restart");
+        let start = document.querySelector(".endScreen");
+        let main = document.querySelector(".main");
+        start.style.display = "flex";
+        main.style.display = "none";
+        restart.addEventListener('click',
+            function () {
+                location.reload();
+            }
+
+        )
     }
 
 

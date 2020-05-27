@@ -10,12 +10,26 @@ ul{
     padding-inline-start: 0px;
 }
 
+.startScreen{
+    text-align: center;
+    display: flex;
+    flex-direction: column;
+    color: white;
+    font-size: 40px;
+    padding-top: 250px;
+    }
+
 .main {
-    display:flex;
+    display: none;
     flex-direction: column;
     width: 100%;
     height: 100%;
     align-content: center;
+}
+
+.howTo{
+    text-decoration: none;
+    color: white;
 }
 
 .background{
@@ -179,4 +193,13 @@ box-shadow: inset 0 0 100px 100px rgba(255, 255, 255, 0.1);
     color: white;
     text-align: center;
     text-emphasis: bold;
+}
+
+.endScreen{
+    text-align: center;
+    display: none;
+    flex-direction: column;
+    color: white;
+    font-size: 40px;
+    padding-top: 250px;
 }
