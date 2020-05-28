@@ -20,7 +20,7 @@ document.addEventListener("DOMContentLoaded", () => {
     )
 
     // Player
-    const player = { name: "SpaceTurtle", baseStrength: 0, strength: 1000, defense: 0, maxHealth:50, hitPoints: 50, maxEnergy:3, energy: 3}
+    const player = { name: "SpaceTurtle", baseStrength: 0, strength: 0, defense: 0, maxHealth:50, hitPoints: 50, maxEnergy:3, energy: 3}
   
 
     // Monster
@@ -129,10 +129,11 @@ document.addEventListener("DOMContentLoaded", () => {
     let drawAmount = 5; 
 
     // Gameplay Functions
+    let cardBlocker = false;
     function drawHand() {
         // Draw Cards
         endTurnDisabler = true;
-
+        cardBlocker = true;
         // crap hack to fix extra card draw on add card, figure out!
         // BUG - can play card before hand is fully drawn, allows for extra card draw.
         handSize = 0;
@@ -142,6 +143,7 @@ document.addEventListener("DOMContentLoaded", () => {
             } else {
                 clearInterval(drawInterval);
                 endTurnDisabler = false;
+                cardBlocker = false;
             }
         }, 300);
     }
@@ -371,6 +373,7 @@ document.addEventListener("DOMContentLoaded", () => {
         cardLi.addEventListener('click',
 
             function () {
+              if (cardBlocker === false){
                 if (player.energy >= card.cost) {
                     player.energy -= card.cost;
                     let attackValue = (card.attack + player.strength);
@@ -434,6 +437,7 @@ document.addEventListener("DOMContentLoaded", () => {
                 } else {
                     alert("You have not enough energy");
                 }
+              } 
             })
         }
     }
