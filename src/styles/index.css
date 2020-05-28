@@ -119,6 +119,7 @@ ul{
 .addCard{
     text-align: center;
     color: white;
+    padding-bottom: 40px;
 }
 
 .cardText{
@@ -141,9 +142,9 @@ ul{
     background-repeat: no-repeat;
     width: 212px;
     height: 296px;
-    margin: 0 15px;
+    margin: 0 -220px;
     max-width: 212px;
-    transition: all .2s ease-in-out; 
+    transition: all .1s ease-in-out; 
 }
 
 .Card:hover { 

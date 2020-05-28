@@ -16,7 +16,6 @@ document.addEventListener("DOMContentLoaded", () => {
             main.style.display = "flex";
             drawHand();
         }
-
     )
 
     // Player
@@ -443,6 +442,8 @@ document.addEventListener("DOMContentLoaded", () => {
     }
 
     function addCard(){
+        let main = document.querySelector(".main2");
+        main.style.display = "none";
         let text = document.querySelector(".addCard")
         text.innerHTML = "CHOOSE A CARD TO ADD TO YOUR DECK"
         endTurnDisabler = true;
@@ -497,6 +498,8 @@ document.addEventListener("DOMContentLoaded", () => {
                     endTurnDisabler = false;
                     let text = document.querySelector(".addCard")
                     text.innerHTML = ""
+                    let main = document.querySelector(".main2");
+                    main.style.display = "";
                 })
         })
     }
