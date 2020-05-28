@@ -111,7 +111,7 @@ document.addEventListener("DOMContentLoaded", () => {
         // { name: "Powerful Bomp", attack: 14, cost: 2, description: "Deal 14 damage. Strength affects this card 3 times."}
     ]
 
-    const exhaustCards = []
+    let exhaustCards = []
 
     // Deck
 
@@ -176,6 +176,7 @@ document.addEventListener("DOMContentLoaded", () => {
                 exhaustCards.forEach(function (card){
                     discard.push(card);
                 })
+            exhaustCards = [];
             hand = [];
             addCard();
             currentLevel += 1;
@@ -365,6 +366,7 @@ document.addEventListener("DOMContentLoaded", () => {
     }
 
     function drawCard(){
+        debugger;
         let cardList = document.querySelector('.card-list');
         if (handSize >= maxHandSize){
             let text = document.querySelector(".addCard")
@@ -552,6 +554,7 @@ document.addEventListener("DOMContentLoaded", () => {
         index = hand.indexOf(card);
         exhaustCards.push(card);
         hand.splice(index, 1);
+        debugger;
     }
 
     function winGame(){
