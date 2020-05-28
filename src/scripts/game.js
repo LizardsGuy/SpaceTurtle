@@ -20,7 +20,7 @@ document.addEventListener("DOMContentLoaded", () => {
     )
 
     // Player
-    const player = { name: "SpaceTurtle", baseStrength: 0, strength: 0, defense: 0, maxHealth:50, hitPoints: 50, maxEnergy:3, energy: 3}
+    const player = { name: "SpaceTurtle", baseStrength: 0, strength: 1000, defense: 0, maxHealth:50, hitPoints: 50, maxEnergy:3, energy: 3}
   
 
     // Monster
@@ -87,9 +87,9 @@ document.addEventListener("DOMContentLoaded", () => {
     const allCards = [
         // { name: "Defend", defense: 5, cost: 1, description: 'Gain 5 defense'},
         // { name: "Punch", attack: 6, cost: 1, description: 'Deal 6 damage', img: "url('./src/styles/cards/card.jpg')" },
-        { name: "Really Angry Yelling", attack: 8, cost: 2, applyVulnerable: 2, description: 'Deal 8 damage. Apply 2 Vulnerable (enemy takes 50% more damage).'},
-        { name: "Shell Harden", cost: 2, gainStrength: 2, exhaust: true, description: 'Gain 2 strength this combat. Exhaust (card removed this battle).' },
-        { name: "Defensive Attack", attack: 5, defense: 5, cost: 1, description: 'Deal 5 damage. Gain 5 defense' },
+        { name: "Really Angry Yelling", attack: 8, cost: 2, applyVulnerable: 2, description: 'Deal 8 damage. Apply 2 Vulnerable (enemy takes 50% more damage).', img: "url('./src/styles/cards/reallyAngryYelling.png')"},
+        { name: "Shell Harden", cost: 2, gainStrength: 2, exhaust: true, description: 'Gain 2 strength this combat. Exhaust (card removed this battle).', img: "url('./src/styles/cards/shellHarden.png')" },
+        { name: "Defensive Attack", attack: 5, defense: 5, cost: 1, description: 'Deal 5 damage. Gain 5 defense', img: "url('./src/styles/cards/defensiveAttack.png')" },
         { name: "Tip-Top-Tep-Tup-Tap", attack: 1, defense: 0, cost: 1, description: 'Deal 1 damage 5 times.'},
         { name: "Shrug It Off", defense: 8, cost: 1, description: "Gain 8 defense. Draw 1 card"},
         { name: "Body Slam", attack: player.defense, cost: 1, description: "Deal damage equal to your defense"}
@@ -115,7 +115,7 @@ document.addEventListener("DOMContentLoaded", () => {
         { name: "Defend", defense: 5, cost: 1, description: 'Gain 5 defense', img: "url('./src/styles/cards/defend.png')" },
         { name: "Defend", defense: 5, cost: 1, description: 'Gain 5 defense', img: "url('./src/styles/cards/defend.png')" },
         { name: "Defend", defense: 5, cost: 1, description: 'Gain 5 defense', img: "url('./src/styles/cards/defend.png')" },
-        { name: "Really Angry Yelling", attack: 8, defense: 0, cost: 2, applyVulnerable: 2, description: `Deal 8 damage. Apply 2 Vulnerable (enemy takes 50% more damage)`}
+        { name: "Really Angry Yelling", attack: 8, defense: 0, cost: 2, applyVulnerable: 2, description: `Deal 8 damage. Apply 2 Vulnerable (enemy takes 50% more damage)`, img: "url('./src/styles/cards/reallyAngryYelling.png')"}
     ];
 
     // Discard
@@ -143,7 +143,7 @@ document.addEventListener("DOMContentLoaded", () => {
                 clearInterval(drawInterval);
                 endTurnDisabler = false;
             }
-        }, 500);
+        }, 300);
     }
 
     function checkEnemyDeath(){
@@ -455,24 +455,29 @@ document.addEventListener("DOMContentLoaded", () => {
         let choiceList = document.querySelector('.card-list');
         choices.forEach(function(card){
             let cardLi = document.createElement("li");
-            let cardText = document.createElement("div");
-            cardText.className = "cardText";
-            let cardName = document.createElement("div");
-            cardName.className = "cardName";
-            cardName.innerHTML = `${card.name}`;
-            let cardCost = document.createElement("div");
-            cardCost.className = "cardCost";
-            cardCost.innerHTML = `(${card.cost})`;
-            let cardDescription = document.createElement("div");
-            cardDescription.className = "cardDescription";
-            cardDescription.innerHTML = `${card.description}`;
+            if(card.img === undefined){
+                let cardText = document.createElement("div");
+                cardText.className = "cardText";
+                let cardName = document.createElement("div");
+                cardName.className = "cardName";
+                cardName.innerHTML = `${card.name}`;
+                let cardCost = document.createElement("div");
+                cardCost.className = "cardCost";
+                cardCost.innerHTML = `(${card.cost})`;
+                let cardDescription = document.createElement("div");
+                cardDescription.className = "cardDescription";
+                cardDescription.innerHTML = `${card.description}`;
+                cardLi.style.backgroundImage = "url('./src/styles/cards/card.jpg')"
+                cardText.appendChild(cardName);
+                cardText.appendChild(cardCost);
+                cardText.appendChild(cardDescription);
+                cardLi.appendChild(cardText);
+            } else {
+                cardLi.style.backgroundImage = `${card.img}`
+            }
             cardLi.className = 'Card';
-            cardLi.style.backgroundImage = "url('./src/styles/cards/card.jpg')"
-            cardText.appendChild(cardName);
-            cardText.appendChild(cardCost);
-            cardText.appendChild(cardDescription);
-            cardLi.appendChild(cardText);
             choiceList.appendChild(cardLi);
+            
             cardLi.addEventListener('click',
 
                 function () {
