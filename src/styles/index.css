@@ -71,20 +71,27 @@ ul{
 }
 
 .enemyImg0{
-    background-image: url("./goblin.png"); 
+    background-image: url("./enemies/goblin.png"); 
     background-size: contain;
     height: 60%;
     background-repeat: no-repeat;
 }
 .enemyImg1{
-    background-image: url("./goblin2.png"); 
+    background-image: url("./enemies/goblin2.png"); 
     background-size: contain;
     height: 80%;
     background-repeat: no-repeat;
 }
 
 .enemyImg2{
-    background-image: url("./goblin3.png"); 
+    background-image: url("./enemies/goblin3.png"); 
+    background-size: contain;
+    height: 80%;
+    background-repeat: no-repeat;
+}
+
+.enemyImg3{
+    background-image: url("./enemies/king.png"); 
     background-size: contain;
     height: 80%;
     background-repeat: no-repeat;

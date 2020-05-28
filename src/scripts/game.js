@@ -70,6 +70,22 @@ document.addEventListener("DOMContentLoaded", () => {
                     {name: "' Better run kid...'", impact: "embiggen", attack: 1, gainStrength: 1},
                     {name: "' huh...'", impact: "defend", defense: 20}
                 ]
+        },
+        {
+            name: "The Goblin King",
+            maxHealth: 160,
+            hitPoints: 160,
+            defense: 0,
+            strength: 0,
+            vulnerable: 0,
+            weak: 0,
+            moves: [
+                { name: "'What are you doing here little turtle?'", impact: "brutalize", attack: 10, defense: 10 },
+                { name: "'Tiny turtle get smash'", impact: "brutalize",attack: 12, defense: 12 },
+                { name: "'Go away I want to sleep'", impact: "embiggen", attack: 10, gainStrength: 1 },
+                { name: "'Yawwwnn'", impact: "embolden", defense: 10, gainStrength: 1 },
+                { name: "'I have to do some stuff'", impact: "brutalize", attack: 10, defense: 10 },
+            ]
         }
     ]
 
@@ -83,12 +99,12 @@ document.addEventListener("DOMContentLoaded", () => {
     const allCards = [
         // { name: "Defend", defense: 5, cost: 1, description: 'Gain 5 defense'},
         // { name: "Punch", attack: 6, cost: 1, description: 'Deal 6 damage', img: "url('./src/styles/cards/card.jpg')" },
-        { name: "Really Angry Yelling", attack: 8, cost: 2, applyVulnerable: 2, description: 'Deal 8 damage. Apply 2 Vulnerable (enemy takes 50% more damage).', img: "url('./src/styles/cards/reallyAngryYelling.png')"},
+        // { name: "Really Angry Yelling", attack: 8, cost: 2, applyVulnerable: 2, description: 'Deal 8 damage. Apply 2 Vulnerable (enemy takes 50% more damage).', img: "url('./src/styles/cards/reallyAngryYelling.png')"},
         { name: "Shell Harden", cost: 2, gainStrength: 2, exhaust: true, description: 'Gain 2 strength this combat. Exhaust (card removed this battle).', img: "url('./src/styles/cards/shellHarden.png')" },
         { name: "Defensive Attack", attack: 5, defense: 5, cost: 1, description: 'Deal 5 damage. Gain 5 defense', img: "url('./src/styles/cards/defensiveAttack.png')" },
         { name: "Tip-Top-Tep-Tup-Tap", attack: 1, defense: 0, cost: 1, description: 'Deal 1 damage 5 times.'},
         { name: "Shrug It Off", defense: 8, cost: 1, description: "Gain 8 defense. Draw 1 card"},
-        { name: "Body Slam", attack: player.defense, cost: 1, description: "Deal damage equal to your defense"}
+        { name: "Body Slam", attack: player.defense, cost: 1, description: "Deal damage equal to your defense", img: "url('./src/styles/cards/bodySlam.png')"}
         // { name: "Growing Rage", attack: 7, cost: 0, description: "Attack for 7. Add a copy of this card to your discard"}
         // { name: "Thwack", attack: 10, applyWeak: 2, cost: 2, description: 'Deal 10 damage. Apply 2 Weak (enemy deals 50% less damage).'},
         // { name: "Flex", gainTurnStrength: 3, cost: 0, description: "Gain 3 Strength. At the end of the turn, lose 3 strength."},
@@ -270,6 +286,9 @@ document.addEventListener("DOMContentLoaded", () => {
             case "defend":
                 intent.innerHTML = `Defend: ${intentMove.defense}`;
                 break;
+            case "brutalize":
+                intent.innerHTML = `Attack: ${intentMove.attack} Defend: ${intentMove.defense}`;
+                break;
             case "embolden":
                 intent.innerHTML = `Defend: ${intentMove.defense} Strength Gain: ${intentMove.gainStrength}`
                 break;
@@ -308,6 +327,16 @@ document.addEventListener("DOMContentLoaded", () => {
                 }
                 player.hitPoints -= attackValue2;
                 enemy.strength += intentMove.gainStrength;
+                break;
+            case "brutalize":
+                let attackValue3 = (intentMove.attack + enemy.strength);
+                while (attackValue3 > 0 && player.defense > 0) {
+                    player.defense -= 1;
+                    attackValue3 -= 1;
+                }
+                player.hitPoints -= attackValue3;
+                enemy.defense += intentMove.defense;
+                updateEnemy();
                 break;
             default:
                 break;
