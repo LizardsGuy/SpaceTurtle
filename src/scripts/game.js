@@ -72,10 +72,7 @@ document.addEventListener("DOMContentLoaded", () => {
                 ]
         }
     ]
-    // const enemyMoves = [
-    //     {name: 'Attack', attack: 5},
-    //     {name: 'Defend', defense: 5}
-    // ]
+
     let intentMove = {};
 
     let currentLevel = 0;
@@ -149,29 +146,27 @@ document.addEventListener("DOMContentLoaded", () => {
 
     function checkEnemyDeath(){
         if(enemy.hitPoints <= 0){
-            currentLevel += 1;
-            if(currentLevel === enemies.length){
+            if(currentLevel + 1 === enemies.length){
                 winGame();
             } else {
-            debugger;
-            alert(`You have defeated the enemy! Welcome to level ${currentLevel + 1}`)
+            cards = document.querySelectorAll('li');
+                cards.forEach(function (card) {
+                    card.remove();
+                })
+                hand.forEach(function (card) {
+                    discard.push(card);
+                    handSize -= 1;
+                })
+                exhaustCards.forEach(function (card){
+                    discard.push(card);
+                })
+            hand = [];
+            addCard();
+            currentLevel += 1;
             enemy = enemies[currentLevel];
             intention();
             enemy.weak = 0;
             enemy.vulnerable = 0;
-            cards = document.querySelectorAll('li');
-            cards.forEach(function (card) {
-                card.remove();
-            })
-            hand.forEach(function (card) {
-                discard.push(card);
-                handSize -= 1;
-            })
-            exhaustCards.forEach(function (card){
-                discard.push(card);
-            })
-            hand = [];
-            addCard();
             // drawHand();
             updateEnemy();
             player.strength = player.baseStrength;
@@ -187,8 +182,18 @@ document.addEventListener("DOMContentLoaded", () => {
 
     function checkPlayerDeath(){
         if(player.hitPoints <= 0){
-            alert('you lose');
-            location.reload();
+        let restart = document.querySelector(".restart");
+        let start = document.querySelector(".endScreen");
+        let main = document.querySelector(".main");
+        let text = document.querySelector(".winLoss")
+        text.innerHTML = `You have lost to ${enemy.name}`
+        start.style.display = "flex";
+        main.style.display = "none";
+        restart.addEventListener('click',
+            function () {
+                location.reload();
+            }
+        )
         }
     }
 
@@ -237,6 +242,8 @@ document.addEventListener("DOMContentLoaded", () => {
 
     let endTurnDisabler = false;
     function endTurn(){
+        let text = document.querySelector(".addCard")
+        text.innerHTML = ``
         if (endTurnDisabler === false){
         cards = document.querySelectorAll('li');
         cards.forEach(function(card){
@@ -331,7 +338,9 @@ document.addEventListener("DOMContentLoaded", () => {
     function drawCard(){
         let cardList = document.querySelector('.card-list');
         if (handSize >= maxHandSize){
-            alert('Your hand is full!');
+            let text = document.querySelector(".addCard")
+            text.innerHTML = `Your hand is full!`
+            setTimeout(function () { text.innerHTML = "" }, 4000);
         } else {
         if (deck.length === 0) {
             deck = discard.slice();
@@ -434,7 +443,9 @@ document.addEventListener("DOMContentLoaded", () => {
                         this.remove(this);
                     }
                 } else {
-                    alert("You have not enough energy");
+                    let text = document.querySelector(".addCard")
+                    text.innerHTML = `You have not enough energy`
+                    setTimeout(function () { text.innerHTML = "" }, 4000);
                 }
               } 
             })
@@ -445,7 +456,7 @@ document.addEventListener("DOMContentLoaded", () => {
         let main = document.querySelector(".main2");
         main.style.display = "none";
         let text = document.querySelector(".addCard")
-        text.innerHTML = "CHOOSE A CARD TO ADD TO YOUR DECK"
+        text.innerHTML = `You have defeated ${enemy.name}.<br><br>Choose a card to add to your deck.`
         endTurnDisabler = true;
         let choices = [];
         let i = 0
