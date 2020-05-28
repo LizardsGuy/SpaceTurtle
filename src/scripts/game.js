@@ -14,6 +14,7 @@ document.addEventListener("DOMContentLoaded", () => {
             start.style.display = "none";
             how.style.display = "none";
             main.style.display = "flex";
+            drawHand();
         }
 
     )
@@ -84,8 +85,8 @@ document.addEventListener("DOMContentLoaded", () => {
     // All Cards
 
     const allCards = [
-        // { name: "Defend", defense: 5, cost: 1, description: 'Gain 5 defense' },
-        // { name: "Punch", attack: 6, cost: 1, description: 'Deal 6 damage' },
+        // { name: "Defend", defense: 5, cost: 1, description: 'Gain 5 defense'},
+        // { name: "Punch", attack: 6, cost: 1, description: 'Deal 6 damage', img: "url('./src/styles/cards/card.jpg')" },
         { name: "Really Angry Yelling", attack: 8, cost: 2, applyVulnerable: 2, description: 'Deal 8 damage. Apply 2 Vulnerable (enemy takes 50% more damage).'},
         { name: "Shell Harden", cost: 2, gainStrength: 2, exhaust: true, description: 'Gain 2 strength this combat. Exhaust (card removed this battle).' },
         { name: "Defensive Attack", attack: 5, defense: 5, cost: 1, description: 'Deal 5 damage. Gain 5 defense' },
@@ -104,16 +105,17 @@ document.addEventListener("DOMContentLoaded", () => {
 
                                                                 // interpolaton doesnt update
     let deck = [
-        { name: "Punch", attack: 6, cost: 1, description: `Deal ${6 + player.strength} damage` },
-        { name: "Punch", attack: 6, cost: 1, description: `Deal ${6 + player.strength} damage`  },
-        { name: "Punch", attack: 6, cost: 1, description: `Deal ${6 + player.strength} damage`  },
-        { name: "Punch", attack: 6, cost: 1, description: `Deal ${6 + player.strength} damage`  },
-        { name: "Punch", attack: 6, cost: 1, description: `Deal ${6 + player.strength} damage` },
-        { name: "Defend", defense: 5, cost: 1, description: 'Gain 5 defense' },
-        { name: "Defend", defense: 5, cost: 1, description: 'Gain 5 defense' },
-        { name: "Defend", defense: 5, cost: 1, description: 'Gain 5 defense' },
-        { name: "Defend", defense: 5, cost: 1, description: 'Gain 5 defense' },
-        { name: "Really Angry Yelling", attack: 8, defense: 0, cost: 2, applyVulnerable: 2, description: `Deal 8 damage. Apply 2 Vulnerable (enemy takes 50% more damage)` }
+        { name: "Punch", attack: 6, cost: 1, description: `Deal ${6 + player.strength} damage`, img: "url('./src/styles/cards/punch.png')"},
+        { name: "Punch", attack: 6, cost: 1, description: `Deal ${6 + player.strength} damage`, img: "url('./src/styles/cards/punch.png')"  },
+        { name: "Punch", attack: 6, cost: 1, description: `Deal ${6 + player.strength} damage`, img: "url('./src/styles/cards/punch.png')"  },
+        { name: "Punch", attack: 6, cost: 1, description: `Deal ${6 + player.strength} damage`, img: "url('./src/styles/cards/punch.png')"  },
+        { name: "Punch", attack: 6, cost: 1, description: `Deal ${6 + player.strength} damage`, img: "url('./src/styles/cards/punch.png')" },
+        { name: "Defend", defense: 5, cost: 1, description: 'Gain 5 defense', img: "url('./src/styles/cards/defend.png')" },
+        { name: "Defend", defense: 5, cost: 1, description: 'Gain 5 defense', img: "url('./src/styles/cards/defend.png')" },
+        { name: "Defend", defense: 5, cost: 1, description: 'Gain 5 defense', img: "url('./src/styles/cards/defend.png')" },
+        { name: "Defend", defense: 5, cost: 1, description: 'Gain 5 defense', img: "url('./src/styles/cards/defend.png')" },
+        { name: "Defend", defense: 5, cost: 1, description: 'Gain 5 defense', img: "url('./src/styles/cards/defend.png')" },
+        { name: "Really Angry Yelling", attack: 8, defense: 0, cost: 2, applyVulnerable: 2, description: `Deal 8 damage. Apply 2 Vulnerable (enemy takes 50% more damage)`}
     ];
 
     // Discard
@@ -129,9 +131,15 @@ document.addEventListener("DOMContentLoaded", () => {
     // Gameplay Functions
     function drawHand() {
         // Draw Cards
-        for (let draw = 0; draw < drawAmount; draw++) {
-            drawCard();
-        }
+        endTurnDisabler = true;
+        const drawInterval = setInterval(() => {
+            if (handSize < drawAmount) {
+                drawCard();
+            } else {
+                clearInterval(drawInterval);
+                endTurnDisabler = false;
+            }
+        }, 500);
     }
 
     function checkEnemyDeath(){
@@ -332,22 +340,27 @@ document.addEventListener("DOMContentLoaded", () => {
         deck.splice(random, 1);
         hand.push(card);
         let cardLi = document.createElement("li");
-        let cardText = document.createElement("div");
-        cardText.className = "cardText";
-        let cardName = document.createElement("div");
-        cardName.className = "cardName";
-        cardName.innerHTML = `${card.name}`;
-        let cardCost = document.createElement("div");
-        cardCost.className = "cardCost";
-        cardCost.innerHTML = `(${card.cost})`;
-        let cardDescription = document.createElement("div");
-        cardDescription.className = "cardDescription";
-        cardDescription.innerHTML = `${card.description}`;
+        if(card.img === undefined){
+            cardLi.style.backgroundImage = "url('./src/styles/cards/card.jpg')"
+            let cardText = document.createElement("div");
+            cardText.className = "cardText";
+            let cardName = document.createElement("div");
+            cardName.className = "cardName";
+            cardName.innerHTML = `${card.name}`;
+            let cardCost = document.createElement("div");
+            cardCost.className = "cardCost";
+            cardCost.innerHTML = `(${card.cost})`;
+            let cardDescription = document.createElement("div");
+            cardDescription.className = "cardDescription";
+            cardDescription.innerHTML = `${card.description}`;
+            cardText.appendChild(cardName);
+            cardText.appendChild(cardCost);
+            cardText.appendChild(cardDescription);
+            cardLi.appendChild(cardText);
+        } else {
+            cardLi.style.backgroundImage = `${card.img}`
+        }
         cardLi.className = 'Card';
-        cardText.appendChild(cardName);
-        cardText.appendChild(cardCost);
-        cardText.appendChild(cardDescription);
-        cardLi.appendChild(cardText);
         cardList.appendChild(cardLi);
 
         // playing a card
@@ -450,6 +463,7 @@ document.addEventListener("DOMContentLoaded", () => {
             cardDescription.className = "cardDescription";
             cardDescription.innerHTML = `${card.description}`;
             cardLi.className = 'Card';
+            cardLi.style.backgroundImage = "url('./src/styles/cards/card.jpg')"
             cardText.appendChild(cardName);
             cardText.appendChild(cardCost);
             cardText.appendChild(cardDescription);
@@ -502,7 +516,6 @@ document.addEventListener("DOMContentLoaded", () => {
      // Game start
     updatePlayer();
     updateEnemy();
-    drawHand();
     intention();
     
 })
