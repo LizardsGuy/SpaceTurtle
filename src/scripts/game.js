@@ -132,6 +132,10 @@ document.addEventListener("DOMContentLoaded", () => {
     function drawHand() {
         // Draw Cards
         endTurnDisabler = true;
+
+        // crap hack to fix extra card draw on add card, figure out!
+        // BUG - can play card before hand is fully drawn, allows for extra card draw.
+        handSize = 0;
         const drawInterval = setInterval(() => {
             if (handSize < drawAmount) {
                 drawCard();
