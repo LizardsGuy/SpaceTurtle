@@ -139,16 +139,15 @@ ul{
     /* background-image: url("./cards/card.jpg"); */
     background-size: contain;
     background-repeat: no-repeat;
-    width: 100%;
+    width: 212px;
     height: 296px;
     margin: 0 15px;
-    max-width: 185px;
+    max-width: 212px;
     transition: all .2s ease-in-out; 
 }
 
 .Card:hover { 
-transform: scale(1.1); 
-box-shadow: inset 0 0 100px 100px rgba(255, 255, 255, 0.1);
+transform: scale(1.1);
 }
 
 #end-turn{
