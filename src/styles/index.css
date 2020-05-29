@@ -7,7 +7,19 @@ body{
     background-attachment: fixed;
     margin: 0px;
     font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+    /* overflow-y: hidden; 
+    overflow-x: hidden;  */
 }
+
+html {
+    overflow: scroll;
+    overflow-x: hidden;
+}
+::-webkit-scrollbar {
+    width: 0px;  /* Remove scrollbar space */
+    background: transparent;  /* Optional: just make scrollbar invisible */
+}
+
 ul{
     padding-inline-start: 0px;
 }
