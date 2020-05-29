@@ -146,8 +146,6 @@ document.addEventListener("DOMContentLoaded", () => {
         // Draw Cards
         endTurnDisabler = true;
         cardBlocker = true;
-        // crap hack to fix extra card draw on add card, figure out!
-        // BUG - can play card before hand is fully drawn, allows for extra card draw.
         handSize = 0;
         const drawInterval = setInterval(() => {
             if (handSize < drawAmount) {
@@ -202,7 +200,7 @@ document.addEventListener("DOMContentLoaded", () => {
         let restart = document.querySelector(".restart");
         let start = document.querySelector(".endScreen");
         let main = document.querySelector(".main");
-        let text = document.querySelector(".winLoss")
+        let text = document.querySelector(".winLoss");
         text.innerHTML = `You have lost to ${enemy.name}`
         start.style.display = "flex";
         main.style.display = "none";
@@ -225,13 +223,13 @@ document.addEventListener("DOMContentLoaded", () => {
     function updatePlayer() {
         let stats = document.querySelector(".stats");
         let health = document.querySelector(".health");
-        health.innerHTML = `Hit Points: ${player.hitPoints} / ${player.maxHealth}`
+        health.innerHTML = `${player.hitPoints} / ${player.maxHealth}`;
         stats.innerHTML = `Energy: ${player.energy} / ${player.maxEnergy}`;
         if(player.defense > 0){
-            stats.innerHTML += `<br> Defense: ${player.defense}`
+            stats.innerHTML += `<br> Defense: ${player.defense}`;
         }
         if(player.strength > 0){
-            stats.innerHTML += `<br> Strength: ${player.strength}`
+            stats.innerHTML += `<br> Strength: ${player.strength}`;
         }
     }
 
@@ -366,7 +364,6 @@ document.addEventListener("DOMContentLoaded", () => {
     }
 
     function drawCard(){
-        debugger;
         let cardList = document.querySelector('.card-list');
         if (handSize >= maxHandSize){
             let text = document.querySelector(".addCard")
@@ -554,7 +551,6 @@ document.addEventListener("DOMContentLoaded", () => {
         index = hand.indexOf(card);
         exhaustCards.push(card);
         hand.splice(index, 1);
-        debugger;
     }
 
     function winGame(){

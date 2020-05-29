@@ -5,6 +5,8 @@ body{
     background-repeat: no-repeat;
     background-size: cover;
     background-attachment: fixed;
+    margin: 0px;
+    font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
 }
 ul{
     padding-inline-start: 0px;
@@ -32,17 +34,16 @@ ul{
     color: white;
 }
 
-.background{
+/* .background{
     /* background-image: url("./background.jpg");
     background-repeat: no-repeat;
     width: 100vw;
     height: 100vh;
-    background-size: cover; */
-}
+    background-size: cover;
+} */
 
 .figures{
     display: flex;
-    justify-content: space-evenly;
 }
 
 
@@ -50,6 +51,7 @@ ul{
     display:  flex;
     flex-direction: column;
     margin-top: 100px;
+    margin-left: 450px;
     height: 130px;
 
 }
@@ -60,7 +62,8 @@ ul{
 }
 
 .enemy {
-    margin-top: 130px;
+    margin-top: 100px;
+    margin-left: 400px;
     /* position: fixed; */
     /* background-image: url("./goblin.png"); */
     /* background-size: cover; */
@@ -99,15 +102,37 @@ ul{
 
 .enemyName{
     text-align: center;
+    white-space: nowrap;
+    padding-right: 40px;
+    line-height: 1.5;
+    font-style: italic;
     color: lightcoral;
     font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+}
+
+.playerName{
+    font-size: 18px;
+    padding-right: 10px;
+    line-height: 1.5;
+    color: white;
+    font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+    text-shadow: rgba(20, 24, 26, 0.842);
+}
+
+.playerTitle{
+    font-size: 11px;
+    padding-right: 70px;
+    line-height: 2.9;
+    font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+    font-style: italic;
+    color: rgba(255, 255, 255, 0.76);
 }
 
 .hand{
     display: flex;
     justify-content: center;
     width: 100%;
-    margin-top: 140px;
+    margin-top: 120px;
     flex-direction: column;
 }
 
@@ -126,7 +151,7 @@ ul{
 .addCard{
     text-align: center;
     color: white;
-    padding-bottom: 40px;
+    margin-bottom: 30px;
 }
 
 .cardText{
@@ -160,12 +185,36 @@ transform: scale(1.1);
 
 #end-turn{
     color: white;
+    background-color: rgba(85, 105, 110, 0.842);
+    width: 100px;
+    line-height: 1.6;
+    margin-top: 200px;
+    margin-left: 100px;
+    font-family: Verdana, Geneva, Tahoma, sans-serif;
+    font-size: 16px;
+    border: rgba(153, 205, 50, 0.63);
+    text-align: center;
+    text-emphasis: bold;
+    border-radius: 10px;
+}
+
+#end-turn:hover {
+  background-color: #4CAF50;
+  color: white;
 }
 
 .navbar{
     display: flex;
-    justify-content: flex-end;
-    width: 90%;
+    justify-content: space-between;
+    width: 100%;
+    background-color: rgba(85, 105, 110, 0.842);
+}
+
+.heart{
+    width: auto;
+    height: 30px;
+    background-size: contain;
+    padding-right: 5px;
 }
 
 .stats-container{
@@ -180,10 +229,17 @@ transform: scale(1.1);
     align-items: center;
 }
 
+.left{
+    display: flex;
+    margin-left: 20px;
+}
+
 .health{
+    line-height: 1.5;
     color: white;
-    font-size: x-large;
+    font-size: 18px;
     text-align: center;
+    text-align: start;
 }
 
 .enemy-stats{
