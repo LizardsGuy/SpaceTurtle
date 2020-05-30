@@ -5,6 +5,8 @@ document.addEventListener("DOMContentLoaded", () => {
         endTurn();
     })
 
+    let soundOn = true;
+
     let start = document.querySelector(".start");
     start.addEventListener('click',
         function () {
@@ -15,18 +17,33 @@ document.addEventListener("DOMContentLoaded", () => {
             how.style.display = "none";
             main.style.display = "flex";
             drawHand();
+            playMusic();
+        }
+    )
+
+    let startNoSound = document.querySelector(".startNoSound");
+    startNoSound.addEventListener('click',
+        function () {
+            let main = document.querySelector(".main");
+            let start = document.querySelector(".startScreen");
+            let how = document.querySelector(".howTo");
+            start.style.display = "none";
+            how.style.display = "none";
+            main.style.display = "flex";
+            drawHand();
+            soundOn = false;
         }
     )
 
     // Player
-    const player = { name: "SpaceTurtle", baseStrength: 1110, strength:1110, defense: 0, maxHealth:50, hitPoints: 50, maxEnergy:3, energy: 3}
+    const player = { name: "SpaceTurtle", baseStrength: 0, strength: 0, defense: 0, maxHealth:50, hitPoints: 50, maxEnergy:3, energy: 3}
   
 
     // Monster
     let enemy = {
         name: "Grumby", maxHealth: 40, hitPoints: 40, defense: 0, strength: 0, vulnerable: 0, weak: 0, moves: [
-            { name: 'Bop', impact: "attack", attack: 6 },
-            { name: 'Cower', impact: "defend", defense: 6 }
+            { name: 'Bop', impact: "attack", attack: 6, sound:`./src/sounds/grumbyAttack` },
+            { name: 'Cower', impact: "defend", defense: 6, sound:`./src/sounds/grumbyDefend` }
         ]}
     const enemies = [
         { name: "Grumby", 
@@ -102,8 +119,8 @@ document.addEventListener("DOMContentLoaded", () => {
         // { name: "Really Angry Yelling", attack: 8, cost: 2, applyVulnerable: 2, description: 'Deal 8 damage. Apply 2 Vulnerable (enemy takes 50% more damage).', img: "url('./src/styles/cards/reallyAngryYelling.png')"},
         { name: "Shell Harden", cost: 2, gainStrength: 2, exhaust: true, description: 'Gain 2 strength this combat. Exhaust (card removed this battle).', img: "url('./src/styles/cards/shellHarden.png')" },
         { name: "Defensive Attack", attack: 5, defense: 5, cost: 1, description: 'Deal 5 damage. Gain 5 defense', img: "url('./src/styles/cards/defensiveAttack.png')" },
-        { name: "Tip-Top-Tep-Tup-Tap", attack: 1, defense: 0, cost: 1, description: 'Deal 1 damage 5 times.'},
-        { name: "Shrug It Off", defense: 8, cost: 1, description: "Gain 8 defense. Draw 1 card"},
+        { name: "Tip-Top-Tep-Tup-Tap", attack: 1, defense: 0, cost: 1, description: 'Deal 1 damage 5 times.', img: "url('./src/styles/cards/tipTap.png')"},
+        { name: "Shrug It Off", defense: 8, cost: 1, description: "Gain 8 defense. Draw 1 card", img: "url('./src/styles/cards/shakeItOff.png')"},
         { name: "Body Slam", attack: player.defense, cost: 1, description: "Deal damage equal to your defense", img: "url('./src/styles/cards/bodySlam.png')"}
         // { name: "Growing Rage", attack: 7, cost: 0, description: "Attack for 7. Add a copy of this card to your discard"}
         // { name: "Thwack", attack: 10, applyWeak: 2, cost: 2, description: 'Deal 10 damage. Apply 2 Weak (enemy deals 50% less damage).'},
@@ -303,13 +320,22 @@ document.addEventListener("DOMContentLoaded", () => {
         enemy.defense = 0;
         switch (intentMove.impact){
             case "attack":
+                if(soundOn === true){
+                var audio = `${intentMove.sound}${Math.floor(Math.random() * 3)}.mp3`
+                playAudio(audio);
+                };
                 let attackValue = (intentMove.attack + enemy.strength);
                 while (attackValue > 0 && player.defense > 0){
                     player.defense -= 1;
                     attackValue -= 1;
                 }
                 player.hitPoints -= attackValue;
+                break;
             case "defend":
+                if(soundOn === true){
+                var audio = `${intentMove.sound}${Math.floor(Math.random() * 2)}.mp3`
+                playAudio(audio);
+                };
                 enemy.defense += intentMove.defense;
                 updateEnemy();
                 break;
@@ -364,6 +390,10 @@ document.addEventListener("DOMContentLoaded", () => {
     }
 
     function drawCard(){
+        if (soundOn === true) {
+            var audio = `./src/sounds/cardDraw.mp3`
+            playAudio(audio, true);
+        };
         let cardList = document.querySelector('.card-list');
         if (handSize >= maxHandSize){
             let text = document.querySelector(".addCard")
@@ -418,38 +448,74 @@ document.addEventListener("DOMContentLoaded", () => {
                     }
                     switch (card.name) {
                         case "Body Slam":
+                            if (soundOn === true) {
+                                var audio = `./src/sounds/bodySlam.mp3`
+                                playAudio(audio);
+                            };
                             damageApply(player.defense);
                             break;
                         case "Defend":
+                            if (soundOn === true) {
+                                var audio = `./src/sounds/defense.mp3`
+                                playAudio(audio);
+                            };
                             player.defense += card.defense;
                             handSize -= 1;
                             break;
                         case "Defensive Attack":
+                            if (soundOn === true) {
+                                var audio = `./src/sounds/defensiveAttack.mp3`
+                                playAudio(audio);
+                            };
                             damageApply(attackValue);
                             player.defense += card.defense;
                             handSize -= 1;
                             break;
                         case "Punch":
+                            if (soundOn === true) {
+                                var audio = `./src/sounds/punch.mp3`
+                                playAudio(audio);
+                            };
                             damageApply(attackValue);
                             handSize -= 1;
                             break;
                         case "Really Angry Yelling":
+                            if (soundOn === true) {
+                                var audio = `./src/sounds/reallyAngry.mp3`
+                                playAudio(audio);
+                            };
                             damageApply(attackValue);
                             enemy.vulnerable += card.applyVulnerable;
                             handSize -= 1;
                             break;
                         case "Shell Harden":
+                            if (soundOn === true) {
+                                var audio = `./src/sounds/harden.mp3`
+                                playAudio(audio);
+                            };
                             player.strength += card.gainStrength;
                             handSize -= 1;
                             exhaust(card);
                             this.remove(this);
                             break;
                         case "Shrug It Off":
+                            if (soundOn === true) {
+                                var audio = `./src/sounds/defense.mp3`
+                                playAudio(audio);
+                            };
+                            if (soundOn === true) {
+                                var audio = `./src/sounds/cardDraw.mp3`
+                                playAudio(audio);
+                            };
                             player.defense += card.defense;
                             handSize -= 1;
                             drawCard();
                             break;
                         case "Tip-Top-Tep-Tup-Tap":
+                            if (soundOn === true) {
+                                var audio = `./src/sounds/tipTap.mp3`
+                                playAudio(audio);
+                            };
                             let i = 0
                             while (i < 5) {
                                 damageApply(attackValue);
@@ -567,10 +633,24 @@ document.addEventListener("DOMContentLoaded", () => {
         )
     }
 
+    function playAudio(url, card) {
+        var audio = new Audio(url)
+        audio.volume = 0.2;
+        if(card === true){
+            audio.volume = 0.05;
+        }
+        audio.play();
+    }
+
+    function playMusic() {
+        var audio = new Audio("background.mp3")
+        audio.volume = 0.2;
+        audio.play();
+    }
+
 
      // Game start
     updatePlayer();
     updateEnemy();
     intention();
-    
 })

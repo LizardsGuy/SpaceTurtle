@@ -40,8 +40,15 @@ ul{
 }
 
 .start{
-        padding-bottom: 10px;
+    padding-bottom: 10px;
     
+}
+.startNoSound{
+    padding-bottom: 10px;
+}
+.startNoSound:hover{
+    padding-bottom: 10px;
+    cursor: pointer;
 }
 
 .start:hover{
