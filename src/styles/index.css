@@ -25,6 +25,7 @@ body{
     text-decoration: none;
     cursor: pointer;
     font-size: 24px;
+    margin-top: -30px;
    
  
 }
@@ -74,6 +75,7 @@ ul{
     background: -webkit-linear-gradient(rgb(223, 105, 105), rgb(205, 105, 255));
     -webkit-background-clip: text;
     -webkit-text-fill-color: transparent;
+    margin-top: -30px;
 }
 
 .startNoSound{
