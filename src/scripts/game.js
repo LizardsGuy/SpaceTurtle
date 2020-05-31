@@ -12,7 +12,9 @@ document.addEventListener("DOMContentLoaded", () => {
         function () {
             let main = document.querySelector(".main");
             let start = document.querySelector(".startScreen");
-            let how = document.querySelector(".howTo");
+            let how = document.querySelector(".howToScreen");
+            let git = document.querySelector(".gitHub");
+            
             start.style.display = "none";
             how.style.display = "none";
             main.style.display = "flex";
@@ -26,12 +28,32 @@ document.addEventListener("DOMContentLoaded", () => {
         function () {
             let main = document.querySelector(".main");
             let start = document.querySelector(".startScreen");
-            let how = document.querySelector(".howTo");
+            let how = document.querySelector(".howToScreen");
+            let git = document.querySelector(".gitHub");
+            git.style.display = "none";
             start.style.display = "none";
             how.style.display = "none";
             main.style.display = "flex";
             drawHand();
             soundOn = false;
+        }
+    )
+
+    let howTo = document.querySelector(".howToOpen");
+    howTo.addEventListener('click',
+        function (){
+            let howToScreen = document.querySelector(".howToScreen");
+            let start = document.querySelector(".startScreen");
+            let how = document.querySelector(".howToScreen");
+            let git = document.querySelector(".gitHub");
+            git.style.display = "none";
+            start.style.display = "none";
+            how.style.display = "none";
+            howToScreen.style.display = "flex";
+            howToScreen.addEventListener('click',
+            function(){
+                location.reload();
+            })        
         }
     )
 
@@ -295,19 +317,19 @@ document.addEventListener("DOMContentLoaded", () => {
         intentName.innerHTML = `${intentMove.name}`
         switch (intentMove.impact) {
             case "attack":
-                intent.innerHTML = `Attack: ${intentMove.attack}`;
+                intent.innerHTML = `Intent: Attack ${intentMove.attack}`;
                 break;
             case "defend":
-                intent.innerHTML = `Defend: ${intentMove.defense}`;
+                intent.innerHTML = `Intent: Defend ${intentMove.defense}`;
                 break;
             case "brutalize":
-                intent.innerHTML = `Attack: ${intentMove.attack} Defend: ${intentMove.defense}`;
+                intent.innerHTML = `Intent: Attack ${intentMove.attack}, Defend ${intentMove.defense}`;
                 break;
             case "embolden":
-                intent.innerHTML = `Defend: ${intentMove.defense} Strength Gain: ${intentMove.gainStrength}`
+                intent.innerHTML = `Intent: Defend ${intentMove.defense}, Strength Gain ${intentMove.gainStrength}`
                 break;
             case "embiggen":
-                intent.innerHTML = `Attack: ${intentMove.attack} Strength Gain: ${intentMove.gainStrength}`
+                intent.innerHTML = `Intent: Attack ${intentMove.attack}, Strength Gain ${intentMove.gainStrength}`
                 break;
             default:
                 break;
