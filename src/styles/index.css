@@ -23,13 +23,17 @@ body{
 
 .howToOpen{
     text-decoration: none;
-    color: white;
-    padding-bottom: 20px;
     cursor: pointer;
+    font-size: 24px;
+   
+ 
 }
 
 .bottom{
-    padding-top: 180px;
+    padding-top: 200px;
+    background: -webkit-linear-gradient(rgb(238, 175, 175), rgb(248, 237, 78));
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
 }
 
 html {
@@ -47,9 +51,13 @@ ul{
 
 .title{
     display: flex;
-    margin-top: -140px;
+    margin-top: -180px;
     justify-content: center;
     padding-bottom: 150px;
+    cursor: default;
+    background: -webkit-linear-gradient(rgb(2, 255, 116), rgb(255, 112, 112) );
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
 }
 .startScreen{
     text-align: center;
@@ -62,10 +70,18 @@ ul{
 
 .start{
     padding-bottom: 10px;
-    
+    font-size: 100px;
+    background: -webkit-linear-gradient(rgb(223, 105, 105), rgb(205, 105, 255));
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
 }
+
 .startNoSound{
     padding-bottom: 10px;
+   background: -webkit-linear-gradient(rgb(223, 105, 105), rgb(191, 78, 248));
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+    font-size: 25px;
 }
 .startNoSound:hover{
     padding-bottom: 10px;
@@ -88,6 +104,7 @@ ul{
 .gitHub{
     text-decoration: none;
     color: white;
+    font-size: 24px;
 }
 
 /* .background{
@@ -229,9 +246,9 @@ ul{
     white-space: nowrap;
     padding-right: 40px;
     line-height: 1.5;
+    font-size: 20px;
     font-style: italic;
-    color: lightcoral;
-    font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+    color: rgb(255, 253, 145);
 }
 
 .playerName{
@@ -332,7 +349,10 @@ transform: scale(1.1);
     display: flex;
     justify-content: space-between;
     width: 100%;
-    background-color: rgba(85, 105, 110, 0.842);
+    /* background-color: rgba(85, 105, 110, 0.842); */
+     background: -webkit-linear-gradient(rgb(52, 133, 224), rgb(10, 10, 10) );
+    -webkit-background-clip: content-box;
+    
 }
 
 .heart{

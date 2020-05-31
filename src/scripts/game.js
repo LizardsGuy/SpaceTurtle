@@ -1,9 +1,10 @@
 document.addEventListener("DOMContentLoaded", () => {
     // add event listener to end turn (research how to just add it to the html?)
     document.getElementById('end-turn').addEventListener('click',
-    function(){
-        endTurn();
-    })
+        function(){
+            endTurn();
+        }
+    );
 
     let soundOn = true;
 
@@ -13,16 +14,15 @@ document.addEventListener("DOMContentLoaded", () => {
             let main = document.querySelector(".main");
             let start = document.querySelector(".startScreen");
             let how = document.querySelector(".howToScreen");
-            let git = document.querySelector(".gitHub");
-            
+            let git = document.querySelector(".gitHub");   
+            main.style.display = "flex";
             start.style.display = "none";
             how.style.display = "none";
-            main.style.display = "flex";
             git.style.display = "none";
             drawHand();
             playMusic();
         }
-    )
+    );
 
     let startNoSound = document.querySelector(".startNoSound");
     startNoSound.addEventListener('click',
@@ -31,14 +31,14 @@ document.addEventListener("DOMContentLoaded", () => {
             let start = document.querySelector(".startScreen");
             let how = document.querySelector(".howToScreen");
             let git = document.querySelector(".gitHub");
-            git.style.display = "none";
+            main.style.display = "flex";
             start.style.display = "none";
             how.style.display = "none";
-            main.style.display = "flex";
+            git.style.display = "none";
             drawHand();
             soundOn = false;
         }
-    )
+    );
 
     let howTo = document.querySelector(".howToOpen");
     howTo.addEventListener('click',
@@ -54,15 +54,15 @@ document.addEventListener("DOMContentLoaded", () => {
             howToScreen.addEventListener('click',
             function(){
                 location.reload();
-            })        
+            });        
         }
-    )
+    );
 
     // Player
     const player = { name: "SpaceTurtle", baseStrength: 0, strength: 0, defense: 0, maxHealth:50, hitPoints: 50, maxEnergy:3, energy: 3}
   
 
-    // Monster
+    // Enemies
     let enemy = {
         name: "Grumby", maxHealth: 40, hitPoints: 40, defense: 0, strength: 0, vulnerable: 0, weak: 0, moves: [
             { name: 'Bop', impact: "attack", attack: 6, sound:`./src/sounds/grumbyAttack` },
@@ -120,14 +120,14 @@ document.addEventListener("DOMContentLoaded", () => {
             vulnerable: 0,
             weak: 0,
             moves: [
-                { name: "'What are you doing here little turtle?'", impact: "brutalize", attack: 10, defense: 10 },
-                { name: "'Tiny turtle get smash'", impact: "brutalize",attack: 12, defense: 12 },
+                { name: "'What are you doing here little turtle?'", impact: "brutalize", attack: 8, defense: 10 },
+                { name: "'Tiny turtle get smash'", impact: "brutalize",attack: 10, defense: 10 },
                 { name: "'Go away I want to sleep'", impact: "embiggen", attack: 10, gainStrength: 1 },
                 { name: "'Yawwwnn'", impact: "embolden", defense: 10, gainStrength: 1 },
-                { name: "'I have to do some stuff'", impact: "brutalize", attack: 10, defense: 10 },
+                { name: "'I have to do some stuff'", impact: "brutalize", attack: 8, defense: 8 },
             ]
         }
-    ]
+    ];
 
     let intentMove = {};
 
