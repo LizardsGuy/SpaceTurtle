@@ -131,14 +131,12 @@ document.addEventListener("DOMContentLoaded", () => {
     let exhaustCards = []
 
     // Deck
-
-                                                                // interpolaton doesnt update
     let deck = [
-        { name: "Punch", attack: 6, cost: 1, description: `Deal ${6 + player.strength} damage`, img: "url('./src/styles/cards/punch.png')"},
-        { name: "Punch", attack: 6, cost: 1, description: `Deal ${6 + player.strength} damage`, img: "url('./src/styles/cards/punch.png')"  },
-        { name: "Punch", attack: 6, cost: 1, description: `Deal ${6 + player.strength} damage`, img: "url('./src/styles/cards/punch.png')"  },
-        { name: "Punch", attack: 6, cost: 1, description: `Deal ${6 + player.strength} damage`, img: "url('./src/styles/cards/punch.png')"  },
-        { name: "Punch", attack: 6, cost: 1, description: `Deal ${6 + player.strength} damage`, img: "url('./src/styles/cards/punch.png')" },
+        { name: "Punch", attack: 6, cost: 1, description: `Deal ${6} damage`, img: "url('./src/styles/cards/punch.png')"},
+        { name: "Punch", attack: 6, cost: 1, description: `Deal ${6} damage`, img: "url('./src/styles/cards/punch.png')"  },
+        { name: "Punch", attack: 6, cost: 1, description: `Deal ${6} damage`, img: "url('./src/styles/cards/punch.png')"  },
+        { name: "Punch", attack: 6, cost: 1, description: `Deal ${6} damage`, img: "url('./src/styles/cards/punch.png')"  },
+        { name: "Punch", attack: 6, cost: 1, description: `Deal ${6} damage`, img: "url('./src/styles/cards/punch.png')" },
         { name: "Defend", defense: 5, cost: 1, description: 'Gain 5 defense', img: "url('./src/styles/cards/defend.png')" },
         { name: "Defend", defense: 5, cost: 1, description: 'Gain 5 defense', img: "url('./src/styles/cards/defend.png')" },
         { name: "Defend", defense: 5, cost: 1, description: 'Gain 5 defense', img: "url('./src/styles/cards/defend.png')" },
@@ -646,6 +644,7 @@ document.addEventListener("DOMContentLoaded", () => {
         var audio = new Audio("background.mp3")
         audio.volume = 0.2;
         audio.play();
+        audio.loop = true;
     }
 
 
