@@ -177,6 +177,15 @@ ul{
     animation-iteration-count: infinite;
     margin-left: 200px;
 }
+.endDance{
+    background-image: url("./enemies/chacha.gif"); 
+    background-size: contain;
+    margin-left: 690px;
+    height: 180px;
+    width: 270px;
+    background-repeat: no-repeat;
+    animation-iteration-count: infinite;
+}
 
 .enemyImg1:hover{
     animation: shake 0.5s;

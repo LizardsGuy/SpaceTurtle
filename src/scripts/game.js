@@ -59,7 +59,7 @@ document.addEventListener("DOMContentLoaded", () => {
     )
 
     // Player
-    const player = { name: "SpaceTurtle", baseStrength: 1110, strength: 1110, defense: 0, maxHealth:50, hitPoints: 50, maxEnergy:3, energy: 3}
+    const player = { name: "SpaceTurtle", baseStrength: 0, strength: 0, defense: 0, maxHealth:50, hitPoints: 50, maxEnergy:3, energy: 3}
   
 
     // Monster
