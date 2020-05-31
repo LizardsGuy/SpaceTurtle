@@ -5,7 +5,8 @@ document.addEventListener("DOMContentLoaded", () => {
             endTurn();
         }
     );
-
+    
+    let opening = playMusic("startMusic.mp3");
     let soundOn = true;
 
     let start = document.querySelector(".start");
@@ -20,7 +21,8 @@ document.addEventListener("DOMContentLoaded", () => {
             how.style.display = "none";
             git.style.display = "none";
             drawHand();
-            playMusic();
+            opening.pause();
+            playMusic("background.mp3");
         }
     );
 
@@ -36,6 +38,7 @@ document.addEventListener("DOMContentLoaded", () => {
             how.style.display = "none";
             git.style.display = "none";
             drawHand();
+            opening.pause();
             soundOn = false;
         }
     );
@@ -663,11 +666,12 @@ document.addEventListener("DOMContentLoaded", () => {
         audio.play();
     }
 
-    function playMusic() {
-        var audio = new Audio("background.mp3")
+    function playMusic(url) {
+        var audio = new Audio(url)
         audio.volume = 0.2;
         audio.play();
         audio.loop = true;
+        return audio;
     }
 
 
