@@ -106,8 +106,8 @@ ul{
 .player {
     display:  flex;
     flex-direction: column;
-    margin-top: 100px;
-    margin-left: 450px;
+    margin-top: 68px;
+    margin-left: 387px;
     height: 130px;
 
 }
@@ -116,9 +116,16 @@ ul{
     animation: shake 0.5s;
 }
 
-.player img {
-    /* height: 100%; */
+/* .player img {
+    height: 100%; 
     max-width: 150px;
+} */
+
+.playerImage{
+    background-size: cover;
+    height: 180px;
+    width: 270px;
+    background-repeat: no-repeat;
 }
 
 .enemy {
@@ -151,10 +158,10 @@ ul{
     background-image: url("./enemies/goblin.png"); 
     background-size: cover;
     height: 180px;
-    width: 271px;
+    width: 270px;
     background-repeat: no-repeat;
     animation-iteration-count: infinite;
-    margin-left: 300px;
+    margin-left: 200px;
 }
 
 .enemyImg0:hover{
@@ -163,9 +170,12 @@ ul{
 
 .enemyImg1{
     background-image: url("./enemies/goblin2.png"); 
-    background-size: contain;
-    height: 80%;
+    background-size: cover;
+    height: 180px;
+    width: 270px;
     background-repeat: no-repeat;
+    animation-iteration-count: infinite;
+    margin-left: 200px;
 }
 
 .enemyImg1:hover{
@@ -173,21 +183,32 @@ ul{
 }
 
 .enemyImg2{
-    background-image: url("./enemies/goblin3.png"); 
-    background-size: contain;
-    height: 80%;
+     background-image: url("./enemies/goblin3.png"); 
+    background-size: cover;
+    height: 180px;
+    width: 270px;
     background-repeat: no-repeat;
+    animation-iteration-count: infinite;
+    margin-left: 200px;
 }
 
 .enemyImg2:hover{
     animation: shake 0.5s;
 }
 
+.endTurt{
+    width: 50%;
+    height: auto;
+}
+
 .enemyImg3{
     background-image: url("./enemies/king.png"); 
-    background-size: contain;
-    height: 80%;
+    background-size: cover;
+    height: 180px;
+    width: 270px;
     background-repeat: no-repeat;
+    animation-iteration-count: infinite;
+    margin-left: 200px;
 }
 
 .enemyImg3:hover{
@@ -316,6 +337,7 @@ transform: scale(1.1);
     font-size: large;
     justify-content: flex-end;
     text-align: center;
+    margin-top: 10px;
 }
 
 .stats{
@@ -340,21 +362,24 @@ transform: scale(1.1);
 .enemy-stats{
     color: white;
     text-align: center;
-    margin-left: 300px;
+    margin-left: 200px;
+    font-size: large;
 }
 
 .intent{
     color: red;
     align-items: center;
     text-align: center;
-    width: 70%;
+    width: 50%;
+    white-space: nowrap;
 }
 
 .intentName{
     color: white;
     text-align: center;
     text-emphasis: bold;
-    width: 70%;
+    width: 50%;
+    white-space: nowrap;
 }
 
 .endScreen{

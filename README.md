@@ -5,7 +5,7 @@
 
   * Play cards to boost your powers, attack enemies, or create defenses.
   * Add cards to your deck after defeating an enemy.    
-  * Fight different... shapes! 
+  * Fight different space... goblins! 
 
 ## Basic gameplay
 
