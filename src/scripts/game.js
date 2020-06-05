@@ -415,13 +415,13 @@ document.addEventListener("DOMContentLoaded", () => {
 
     function drawCard(){
         if (soundOn === true) {
-            var audio = `./src/sounds/cardDraw.mp3`
+            var audio = `./src/sounds/cardDraw.mp3`;
             playAudio(audio, true);
         };
         let cardList = document.querySelector('.card-list');
         if (handSize >= maxHandSize){
-            let text = document.querySelector(".addCard")
-            text.innerHTML = `Your hand is full!`
+            let text = document.querySelector(".addCard");
+            text.innerHTML = `Your hand is full!`;
             setTimeout(function () { text.innerHTML = "" }, 4000);
         } else {
         if (deck.length === 0) {
@@ -468,19 +468,19 @@ document.addEventListener("DOMContentLoaded", () => {
                     player.energy -= card.cost;
                     let attackValue = (card.attack + player.strength);
                     if (enemy.vulnerable > 0) {
-                        attackValue *= 1.5
+                        attackValue *= 1.5;
                     }
                     switch (card.name) {
                         case "Body Slam":
                             if (soundOn === true) {
-                                var audio = `./src/sounds/bodySlam.mp3`
+                                var audio = `./src/sounds/bodySlam.mp3`;
                                 playAudio(audio);
                             };
                             damageApply(player.defense);
                             break;
                         case "Defend":
                             if (soundOn === true) {
-                                var audio = `./src/sounds/defense.mp3`
+                                var audio = `./src/sounds/defense.mp3`;
                                 playAudio(audio);
                             };
                             player.defense += card.defense;
@@ -488,7 +488,7 @@ document.addEventListener("DOMContentLoaded", () => {
                             break;
                         case "Defensive Attack":
                             if (soundOn === true) {
-                                var audio = `./src/sounds/defensiveAttack.mp3`
+                                var audio = `./src/sounds/defensiveAttack.mp3`;
                                 playAudio(audio);
                             };
                             damageApply(attackValue);
@@ -497,7 +497,7 @@ document.addEventListener("DOMContentLoaded", () => {
                             break;
                         case "Punch":
                             if (soundOn === true) {
-                                var audio = `./src/sounds/punch.mp3`
+                                var audio = `./src/sounds/punch.mp3`;
                                 playAudio(audio);
                             };
                             damageApply(attackValue);
@@ -505,7 +505,7 @@ document.addEventListener("DOMContentLoaded", () => {
                             break;
                         case "Really Angry Yelling":
                             if (soundOn === true) {
-                                var audio = `./src/sounds/reallyAngry.mp3`
+                                var audio = `./src/sounds/reallyAngry.mp3`;
                                 playAudio(audio);
                             };
                             damageApply(attackValue);
@@ -514,7 +514,7 @@ document.addEventListener("DOMContentLoaded", () => {
                             break;
                         case "Shell Harden":
                             if (soundOn === true) {
-                                var audio = `./src/sounds/harden.mp3`
+                                var audio = `./src/sounds/harden.mp3`;
                                 playAudio(audio);
                             };
                             player.strength += card.gainStrength;
@@ -524,11 +524,11 @@ document.addEventListener("DOMContentLoaded", () => {
                             break;
                         case "Shrug It Off":
                             if (soundOn === true) {
-                                var audio = `./src/sounds/defense.mp3`
+                                var audio = `./src/sounds/defense.mp3`;
                                 playAudio(audio);
                             };
                             if (soundOn === true) {
-                                var audio = `./src/sounds/cardDraw.mp3`
+                                var audio = `./src/sounds/cardDraw.mp3`;
                                 playAudio(audio);
                             };
                             player.defense += card.defense;
@@ -537,13 +537,13 @@ document.addEventListener("DOMContentLoaded", () => {
                             break;
                         case "Tip-Top-Tep-Tup-Tap":
                             if (soundOn === true) {
-                                var audio = `./src/sounds/tipTap.mp3`
+                                var audio = `./src/sounds/tipTap.mp3`;
                                 playAudio(audio);
                             };
-                            let i = 0
+                            let i = 0;
                             while (i < 5) {
                                 damageApply(attackValue);
-                                i += 1
+                                i += 1;
                             }
                             handSize -= 1;
                             break;
@@ -561,8 +561,8 @@ document.addEventListener("DOMContentLoaded", () => {
                         this.remove(this);
                     }
                 } else {
-                    let text = document.querySelector(".addCard")
-                    text.innerHTML = `You have not enough energy`
+                    let text = document.querySelector(".addCard");
+                    text.innerHTML = `You have not enough energy`;
                     setTimeout(function () { text.innerHTML = "" }, 4000);
                 }
               } 
