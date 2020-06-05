@@ -18,7 +18,7 @@
 
 ![addCard](./addCard.png)
 
-## Challanges
+## Challenges
 
 One interesting challange from this project was making it so enemies and cards could be easilly added. I wanted to make sure that if I wanted to add a new card or enemy it wouldn't be too troublesome.  Now, making a new card or enemy is only limited by the time it takes to make the art and voicelines. Adding a card, enemy, or concept is a pretty quick refactor of the code.
 
