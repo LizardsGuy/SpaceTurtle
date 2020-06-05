@@ -63,7 +63,8 @@ let enemy = {
 ``` -->
 
 ## Future Directions
-    Though this is a project to show programming ability, if I were to continue working on it, I would look into features present in popular deckbuilding roguelite games (ie: Slay The Spire), such as: 
+    
+  ### Though this is a project to show programming ability, if I were to continue working on it, I would look into features present in popular deckbuilding roguelite games (ie: Slay The Spire), such as: 
 
   * Display deck and discard.
   * Add gold, shops, card removal, stores, healing.
