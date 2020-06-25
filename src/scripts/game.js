@@ -633,10 +633,6 @@ document.addEventListener("DOMContentLoaded", () => {
         })
     }
 
-    // function winGame(){
-    //     if 
-    // }
-
     function exhaust(card){
         index = hand.indexOf(card);
         exhaustCards.push(card);
