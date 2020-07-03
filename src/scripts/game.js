@@ -670,7 +670,7 @@ document.addEventListener("DOMContentLoaded", () => {
         return audio;
     }
 
-
+    //test
      // Game start
     updatePlayer();
     updateEnemy();
