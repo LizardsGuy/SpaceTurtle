@@ -11,6 +11,9 @@ body{
     overflow-x: hidden;  */
 }
 
+.test{
+    display: none;
+}
 .howToScreen{
     display: none;
     content: url("./hi.png");
