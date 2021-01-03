@@ -20,9 +20,9 @@
 
 ## Challenges
 
-One interesting challange from this project was making it so enemies and cards could be easilly added. I wanted to make sure that if I wanted to add a new card or enemy it wouldn't be too troublesome.  Now, making a new card or enemy is only limited by the time it takes to make the art and voicelines. Adding a card, enemy, or concept is a pretty quick refactor of the code.
+One interesting challenge from this project was making it so enemies and cards could be easilly added. I wanted to make sure that if I wanted to add a new card or enemy it wouldn't be too troublesome.  Now, making a new card or enemy is only limited by the time it takes to make the art and voicelines. Adding a card, enemy, or concept is a pretty quick refactor of the code.
 
-Another challange was getting the deck to shuffle accurately, and to make cards know what they will do.  I was able to make exhaust cards work as well by moving around these objects.  
+Another challenge was getting the deck to shuffle accurately, and to make cards know what they will do.  I was able to make exhaust cards work as well by moving around these objects.  
 <!-- ```javascript
 let enemy = {
         name: "Grumby", maxHealth: 40, hitPoints: 40, defense: 0, strength: 0, vulnerable: 0, weak: 0, moves: [
