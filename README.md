@@ -20,9 +20,9 @@
 
 ## Challenges
 
-One interesting challange from this project was making it so enemies and cards could be easilly added. I wanted to make sure that if I wanted to add a new card or enemy it wouldn't be too troublesome.  Now, making a new card or enemy is only limited by the time it takes to make the art and voicelines. Adding a card, enemy, or concept is a pretty quick refactor of the code.
+One interesting challenge from this project was making it so enemies and cards could be easily added. I wanted to make sure that if I wanted to add a new card or enemy it wouldn't be too troublesome.  Now, making a new card or enemy is only limited by the time it takes to make the art and voice lines. Adding a card, enemy, or concept is a pretty quick refactor of the code.
 
-Another challange was getting the deck to shuffle accurately, and to make cards know what they will do.  I was able to make exhaust cards work as well by moving around these objects.  
+Another challenge was getting the deck to shuffle accurately, and to make cards know what they will do.  I was able to make exhaust cards work as well by moving around these objects.  
 <!-- ```javascript
 let enemy = {
         name: "Grumby", maxHealth: 40, hitPoints: 40, defense: 0, strength: 0, vulnerable: 0, weak: 0, moves: [
@@ -62,7 +62,7 @@ let enemy = {
         },
 ``` -->
 
-## Future Directions
+## Future Direction
     
   ### Though this is a project to show programming ability, if I were to continue working on it, I would look into features present in popular deckbuilding roguelite games (ie: Slay The Spire), such as: 
 
@@ -76,6 +76,6 @@ let enemy = {
   * Etc.
 
 ### WireFrame
-  * The game will consist of a single battle screen and static placements for enemies and players. You can play cards from your hand to activate them. Enemy will display intent and lower HP when dealt damage. Cards are drawn and discarded, and shuffled when the draw pile is empty. 
+  * The game will consist of a single battle screen and static placements for enemies and players. You can play cards from your hand to activate them. Enemy will display intent and lower HP when dealt damage. Cards are drawn, discarded, and shuffled when the draw pile is empty. 
 
 ![wireframe](./turtle.png)
