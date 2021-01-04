@@ -62,7 +62,7 @@ document.addEventListener("DOMContentLoaded", () => {
     );
 
     // Player
-    const player = { name: "SpaceTurtle", baseStrength: 0, strength: 0, defense: 0, maxHealth:50, hitPoints: 50, maxEnergy:3, energy: 3}
+    const player = { name: "SpaceTurtle", baseStrength: 0, strength: 0, defense: 0, maxHealth: 50, hitPoints: 50, maxEnergy: 3, energy: 3}
   
 
     // Enemies
@@ -158,10 +158,10 @@ document.addEventListener("DOMContentLoaded", () => {
 
     // Deck
     let deck = [
-        { name: "Punch", attack: 6, cost: 1, description: `Deal ${6} damage`, img: "url('./src/styles/cards/punch.png')"},
-        { name: "Punch", attack: 6, cost: 1, description: `Deal ${6} damage`, img: "url('./src/styles/cards/punch.png')"  },
-        { name: "Punch", attack: 6, cost: 1, description: `Deal ${6} damage`, img: "url('./src/styles/cards/punch.png')"  },
-        { name: "Punch", attack: 6, cost: 1, description: `Deal ${6} damage`, img: "url('./src/styles/cards/punch.png')"  },
+        { name: "Punch", attack: 6, cost: 1, description: `Deal ${6} damage`, img: "url('./src/styles/cards/punch.png')" },
+        { name: "Punch", attack: 6, cost: 1, description: `Deal ${6} damage`, img: "url('./src/styles/cards/punch.png')" },
+        { name: "Punch", attack: 6, cost: 1, description: `Deal ${6} damage`, img: "url('./src/styles/cards/punch.png')" },
+        { name: "Punch", attack: 6, cost: 1, description: `Deal ${6} damage`, img: "url('./src/styles/cards/punch.png')" },
         { name: "Punch", attack: 6, cost: 1, description: `Deal ${6} damage`, img: "url('./src/styles/cards/punch.png')" },
         { name: "Defend", defense: 5, cost: 1, description: 'Gain 5 defense', img: "url('./src/styles/cards/defend.png')" },
         { name: "Defend", defense: 5, cost: 1, description: 'Gain 5 defense', img: "url('./src/styles/cards/defend.png')" },
@@ -173,10 +173,10 @@ document.addEventListener("DOMContentLoaded", () => {
 
     // Discard
 
-    let discard = []
+    let discard = [];
 
     // Hand
-    let hand = []
+    let hand = [];
     let handSize = 0;
     let maxHandSize = 5;
     let drawAmount = 5; 
@@ -207,17 +207,18 @@ document.addEventListener("DOMContentLoaded", () => {
             cards = document.querySelectorAll('li');
                 cards.forEach(function (card) {
                     card.remove();
-                })
+                });
                 hand.forEach(function (card) {
                     discard.push(card);
                     handSize -= 1;
-                })
+                });
                 exhaustCards.forEach(function (card){
                     discard.push(card);
-                })
+                });
             exhaustCards = [];
             hand = [];
             addCard();
+            /* chooseMap here?*/
             currentLevel += 1;
             enemy = enemies[currentLevel];
             intention();
@@ -242,7 +243,7 @@ document.addEventListener("DOMContentLoaded", () => {
         let start = document.querySelector(".endScreen");
         let main = document.querySelector(".main");
         let text = document.querySelector(".winLoss");
-        text.innerHTML = `You have lost to ${enemy.name}`
+        text.innerHTML = `You have lost to ${enemy.name}`;
         start.style.display = "flex";
         main.style.display = "none";
         restart.addEventListener('click',
@@ -253,6 +254,8 @@ document.addEventListener("DOMContentLoaded", () => {
         }
     }
 
+    /*  Mess with this for multiple enemies
+        add a target function?  */
     function damageApply(attackValue){
         while (attackValue > 0 && enemy.defense > 0) {
             enemy.defense -= 1;
@@ -280,9 +283,9 @@ document.addEventListener("DOMContentLoaded", () => {
         let enemyStats = document.querySelector(".enemy-stats");
         enemyStats.innerHTML = `Hit Points: ${enemy.hitPoints} / ${enemy.maxHealth}`;
         if (levelChecker !== currentLevel){
-        let enemyImg = document.querySelector(`.enemyImg${levelChecker}`);
-        enemyImg.className = `enemyImg${currentLevel}`;
-        levelChecker += 1;
+            let enemyImg = document.querySelector(`.enemyImg${levelChecker}`);
+            enemyImg.className = `enemyImg${currentLevel}`;
+            levelChecker += 1;
         }
         document.getElementsByClassName("myEle").class
         if (enemy.defense > 0) {
@@ -555,8 +558,8 @@ document.addEventListener("DOMContentLoaded", () => {
                     if (checkEnemyDeath() === false) {
                         index = hand.indexOf(card);
                         if(card.exhaust !== true){
-                        discard.push(card);
-                        hand.splice(index, 1);
+                            discard.push(card);
+                            hand.splice(index, 1);
                         }
                         this.remove(this);
                     }

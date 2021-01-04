@@ -214,7 +214,7 @@ ul{
 }
 
 .enemyImg2{
-     background-image: url("./enemies/goblin3.png"); 
+    background-image: url("./enemies/goblin3.png"); 
     background-size: cover;
     height: 180px;
     width: 270px;
